@@ -1,5 +1,6 @@
 package com.manage.ctrl;
 
+import com.manage.entity.Ret;
 import com.manage.entity.User;
 import com.manage.service.iface.UserService;
 import com.manage.util.RedisUtil;
@@ -26,10 +27,12 @@ public class UserCtrl
     @Autowired
     RedisUtil redisUtil;
     @RequestMapping(value = "/getUser",method = RequestMethod.GET)
-    public User getUser()
+    public Ret<User> getUser()
     {
         redisUtil.set("aaa", "111");
         logger.info("hhhhhhhhhhhhhhhhhhhhhhhh---------"+redisUtil.get("aaa"));
-        return userService.getUser();
+        User user = userService.getUser();
+        Ret<User> ret = new Ret<>(user);
+        return ret;
     }
 }

@@ -8,9 +8,16 @@ package com.manage.entity;
  */
 public class Ret<T>
 {
+    // 数据
     private T data;
+    // 响应码
     private String code;
+    // 消息
     private String msg;
+
+    public static Ret getRet(){
+        return new Ret();
+    }
 
     public Ret()
     {

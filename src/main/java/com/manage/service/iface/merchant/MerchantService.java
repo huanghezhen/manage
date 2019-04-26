@@ -12,4 +12,6 @@ import com.manage.entity.table.Merchant;
 public interface MerchantService
 {
     Ret registerMerchant(Merchant merchant);
+
+    Ret updateMerchant(Merchant merchant);
 }

@@ -12,6 +12,10 @@ public class Ret<T>
     private String code;
     private String msg;
 
+    public Ret()
+    {
+    }
+
     public Ret(String code)
     {
         this.code = code;

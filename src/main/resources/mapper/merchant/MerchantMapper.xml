@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manage.dao.merchant.MerchantMapper" >
+    <insert id="saveMerchant" parameterType="com.manage.entity.table.Merchant">
+        insert into merchant (merchant_code, merchant_name, email, phone, secret_key, expire_time, create_time, update_time) VALUES
+        (#{merchantCode},#{merchantName},#{email},#{phone},#{secretKey},#{expireTime},#{createTime},#{updateTime})
+    </insert>
+
+    <update id="updateMerchant" parameterType="com.manage.entity.table.Merchant">
+        update merchant
+        <set>
+            <if test="merchantName!=null and merchantName!=''">
+                merchant_name = #{merchantName},
+            </if>
+            <if test="state!=null and state!=''">
+                state = #{state},
+            </if>
+            <if test="email!=null and email!=''">
+                email = #{email},
+            </if>
+            <if test="secretKey!=null and secretKey!=''">
+                secret_key = #{secretKey},
+            </if>
+            <if test="expireTime!=null and expireTime!=''">
+                expire_time = #{expireTime},
+            </if>
+        </set>
+        where merchant_code = #{merchantCode}
+    </update>
+</mapper>

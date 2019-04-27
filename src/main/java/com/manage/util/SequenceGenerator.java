@@ -14,6 +14,7 @@ import java.util.Date;
 @Component
 public class SequenceGenerator
 {
+    private String manage;
     private long             min;
     private long             max;
     private long             counter;
@@ -21,6 +22,7 @@ public class SequenceGenerator
 
     public SequenceGenerator()
     {
+        manage = "1";
         min = 10000L;
         max = 99999L;
         counter = 10000L;
@@ -35,7 +37,7 @@ public class SequenceGenerator
         {
             counter = min;
         }
-        return dateStr + (counter++);
+        return manage+dateStr + (counter++);
     }
 
 }

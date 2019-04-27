@@ -3,7 +3,6 @@ package com.manage.service.impl.merchant;
 import com.manage.config.Const;
 import com.manage.dao.merchant.MerchantMapper;
 import com.manage.entity.Ret;
-import com.manage.entity.User;
 import com.manage.entity.table.Merchant;
 import com.manage.service.iface.merchant.MerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,25 +22,24 @@ public class MerchantServiceImpl implements MerchantService
     @Override
     public Ret registerMerchant(Merchant merchant)
     {
-        Ret ret = Ret.getRet();
         int i = merchantMapper.saveMerchant(merchant);
         if (i<=0){
-            ret.setCode(Const.failedEnum.SAVE_MERCHANT_FAILED.getCode());
-            ret.setMsg(Const.failedEnum.SAVE_MERCHANT_FAILED.getMsg());
+            return Ret.getRet(Const.failedEnum.SAVE_MERCHANT_FAILED.getCode(),Const.failedEnum.SAVE_MERCHANT_FAILED.getMsg());
         }else{
-            ret.setCode(Const.SUCCEED);
+            return Ret.getRet(Const.SUCCEED);
         }
-        return null;
     }
 
     @Override
     public Ret updateMerchant(Merchant merchant)
     {
         int i = merchantMapper.updateMerchant(merchant);
+        if (i<=0){
+            return Ret.getRet(Const.failedEnum.UPDATE_MERCHANT_FAILED.getCode(),Const.failedEnum.UPDATE_MERCHANT_FAILED.getMsg());
+        }else{
+            return Ret.getRet(Const.SUCCEED);
+        }
 
-
-        Ret<User> ret = Ret.getRet();
-        return null;
     }
 
 }

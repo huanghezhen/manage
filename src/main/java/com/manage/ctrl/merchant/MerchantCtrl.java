@@ -32,7 +32,18 @@ public class MerchantCtrl
     @RequestMapping("/registerMerchant")
     public Ret registerMerchant(@RequestBody Merchant merchant)
     {
+        logger.info("/merchantCtrl/registerMerchant param : " + merchant.toString());
         Ret ret = merchantService.registerMerchant(merchant);
+        logger.info("/merchantCtrl/updateMerchant ret : " + ret.toString());
+        return ret;
+    }
+
+    @RequestMapping("/updateMerchant")
+    public Ret updateMerchant(@RequestBody Merchant merchant)
+    {
+        logger.info("/merchantCtrl/updateMerchant param : " + merchant.toString());
+        Ret ret = merchantService.updateMerchant(merchant);
+        logger.info("/merchantCtrl/updateMerchant ret : " + ret.toString());
         return ret;
     }
 }

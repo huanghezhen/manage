@@ -12,7 +12,9 @@ public class Const
     public static final String SUCCEED = "0";
 
     public enum failedEnum{
-        SAVE_MERCHANT_FAILED("-1", "注册商户失败");
+        SAVE_MERCHANT_FAILED("-1", "注册商户失败"),
+        UPDATE_MERCHANT_FAILED("-2", "修改商户失败")
+        ;
 
         // 错误码
         private String code;

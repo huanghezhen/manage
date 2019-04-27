@@ -96,4 +96,25 @@ public class User
 		this.updateTime = updateTime;
 	}
 
+	@Override
+	public String toString()
+	{
+		final StringBuilder sb = new StringBuilder("{");
+		sb.append("\"userCode\":\"")
+				.append(userCode).append('\"');
+		sb.append(",\"merchantCode\":\"")
+				.append(merchantCode).append('\"');
+		sb.append(",\"userName\":\"")
+				.append(userName).append('\"');
+		sb.append(",\"userPasswd\":\"")
+				.append(userPasswd).append('\"');
+		sb.append(",\"state\":")
+				.append(state);
+		sb.append(",\"createTime\":\"")
+				.append(createTime).append('\"');
+		sb.append(",\"updateTime\":\"")
+				.append(updateTime).append('\"');
+		sb.append('}');
+		return sb.toString();
+	}
 }

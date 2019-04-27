@@ -122,4 +122,29 @@ public class Merchant
 		this.updateTime = updateTime;
 	}
 
+	@Override
+	public String toString()
+	{
+		final StringBuilder sb = new StringBuilder("{");
+		sb.append("\"merchantCode\":\"")
+				.append(merchantCode).append('\"');
+		sb.append(",\"merchantName\":\"")
+				.append(merchantName).append('\"');
+		sb.append(",\"state\":")
+				.append(state);
+		sb.append(",\"email\":\"")
+				.append(email).append('\"');
+		sb.append(",\"phone\":\"")
+				.append(phone).append('\"');
+		sb.append(",\"secretKey\":\"")
+				.append(secretKey).append('\"');
+		sb.append(",\"expireTime\":\"")
+				.append(expireTime).append('\"');
+		sb.append(",\"createTime\":\"")
+				.append(createTime).append('\"');
+		sb.append(",\"updateTime\":\"")
+				.append(updateTime).append('\"');
+		sb.append('}');
+		return sb.toString();
+	}
 }

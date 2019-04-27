@@ -135,4 +135,31 @@ public class Member
 		this.updateTime = updateTime;
 	}
 
+	@Override
+	public String toString()
+	{
+		final StringBuilder sb = new StringBuilder("{");
+		sb.append("\"memberCode\":\"")
+				.append(memberCode).append('\"');
+		sb.append(",\"merchantCode\":\"")
+				.append(merchantCode).append('\"');
+		sb.append(",\"memberName\":\"")
+				.append(memberName).append('\"');
+		sb.append(",\"memberPasswd\":\"")
+				.append(memberPasswd).append('\"');
+		sb.append(",\"headImg\":\"")
+				.append(headImg).append('\"');
+		sb.append(",\"state\":")
+				.append(state);
+		sb.append(",\"phone\":\"")
+				.append(phone).append('\"');
+		sb.append(",\"openId\":\"")
+				.append(openId).append('\"');
+		sb.append(",\"createTime\":\"")
+				.append(createTime).append('\"');
+		sb.append(",\"updateTime\":\"")
+				.append(updateTime).append('\"');
+		sb.append('}');
+		return sb.toString();
+	}
 }

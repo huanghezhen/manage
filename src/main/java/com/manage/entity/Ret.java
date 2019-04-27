@@ -15,8 +15,14 @@ public class Ret<T>
     // 消息
     private String msg;
 
-    public static Ret getRet(){
-        return new Ret();
+    public static Ret getRet(String code){
+        return new Ret(code);
+    }
+    public static Ret getRet(String code,String msg){
+        return new Ret(code,msg);
+    }
+    public static<T> Ret<T> getRetT(){
+        return new Ret<>();
     }
 
     public Ret()
@@ -26,6 +32,12 @@ public class Ret<T>
     public Ret(String code)
     {
         this.code = code;
+    }
+
+    public Ret(String code, String msg)
+    {
+        this.code = code;
+        this.msg = msg;
     }
 
     public Ret(T data)
@@ -74,5 +86,19 @@ public class Ret<T>
     public void setMsg(String msg)
     {
         this.msg = msg;
+    }
+
+    @Override
+    public String toString()
+    {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"data\":")
+                .append(data);
+        sb.append(",\"code\":\"")
+                .append(code).append('\"');
+        sb.append(",\"msg\":\"")
+                .append(msg).append('\"');
+        sb.append('}');
+        return sb.toString();
     }
 }

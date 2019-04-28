@@ -1,13 +1,14 @@
 package com.manage.ctrl.merchant;
 
 import com.manage.entity.Ret;
-import com.manage.entity.table.Merchant;
+import com.manage.entity.merchant.MerchantModel;
 import com.manage.service.iface.merchant.MerchantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -29,21 +30,17 @@ public class MerchantCtrl
      * @param merchant
      * @return
      */
-    @RequestMapping("/registerMerchant")
-    public Ret registerMerchant(@RequestBody Merchant merchant)
+    @RequestMapping(value = "/registerMerchant",method = RequestMethod.GET)
+    public Ret registerMerchant(@RequestBody MerchantModel merchant)
     {
-        logger.info("/merchantCtrl/registerMerchant param : " + merchant.toString());
         Ret ret = merchantService.registerMerchant(merchant);
-        logger.info("/merchantCtrl/updateMerchant ret : " + ret.toString());
         return ret;
     }
 
-    @RequestMapping("/updateMerchant")
-    public Ret updateMerchant(@RequestBody Merchant merchant)
+    @RequestMapping(value = "/updateMerchant",method = RequestMethod.GET)
+    public Ret updateMerchant(@RequestBody MerchantModel merchant)
     {
-        logger.info("/merchantCtrl/updateMerchant param : " + merchant.toString());
         Ret ret = merchantService.updateMerchant(merchant);
-        logger.info("/merchantCtrl/updateMerchant ret : " + ret.toString());
         return ret;
     }
 }

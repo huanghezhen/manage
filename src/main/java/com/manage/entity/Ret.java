@@ -1,5 +1,7 @@
 package com.manage.entity;
 
+import com.manage.config.Const;
+
 /**
  * @ClassName: Ret
  * @Description: TODO
@@ -22,7 +24,7 @@ public class Ret<T>
         return new Ret(code,msg);
     }
     public static<T> Ret<T> getRetT(){
-        return new Ret<>();
+        return new Ret<>(Const.SUCCEED,Const.SUCCEED_MSG);
     }
 
     public Ret()
@@ -92,12 +94,16 @@ public class Ret<T>
     public String toString()
     {
         final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"data\":")
-                .append(data);
-        sb.append(",\"code\":\"")
+        sb.append("\"code\":\"")
                 .append(code).append('\"');
-        sb.append(",\"msg\":\"")
-                .append(msg).append('\"');
+        if (data != null){
+            sb.append(",\"data\":")
+                    .append(data);
+        }
+        if (msg != null){
+            sb.append(",\"msg\":\"")
+                    .append(msg).append('\"');
+        }
         sb.append('}');
         return sb.toString();
     }

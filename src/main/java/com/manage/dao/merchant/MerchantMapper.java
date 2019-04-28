@@ -1,6 +1,6 @@
 package com.manage.dao.merchant;
 
-import com.manage.entity.table.Merchant;
+import com.manage.entity.merchant.MerchantModel;
 
 /**
  * @ClassName: MerchantMapper
@@ -10,7 +10,7 @@ import com.manage.entity.table.Merchant;
  */
 public interface MerchantMapper
 {
-    int saveMerchant(Merchant merchant);
+    int saveMerchant(MerchantModel merchant);
 
-    int updateMerchant(Merchant merchant);
+    int updateMerchant(MerchantModel merchant);
 }

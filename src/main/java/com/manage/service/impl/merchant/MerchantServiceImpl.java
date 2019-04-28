@@ -3,7 +3,7 @@ package com.manage.service.impl.merchant;
 import com.manage.config.Const;
 import com.manage.dao.merchant.MerchantMapper;
 import com.manage.entity.Ret;
-import com.manage.entity.table.Merchant;
+import com.manage.entity.merchant.MerchantModel;
 import com.manage.service.iface.merchant.MerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class MerchantServiceImpl implements MerchantService
     @Autowired
     private MerchantMapper merchantMapper;
     @Override
-    public Ret registerMerchant(Merchant merchant)
+    public Ret registerMerchant(MerchantModel merchant)
     {
         int i = merchantMapper.saveMerchant(merchant);
         if (i<=0){
@@ -31,7 +31,7 @@ public class MerchantServiceImpl implements MerchantService
     }
 
     @Override
-    public Ret updateMerchant(Merchant merchant)
+    public Ret updateMerchant(MerchantModel merchant)
     {
         int i = merchantMapper.updateMerchant(merchant);
         if (i<=0){

@@ -1,7 +1,7 @@
 package com.manage.service.iface.merchant;
 
 import com.manage.entity.Ret;
-import com.manage.entity.table.Merchant;
+import com.manage.entity.merchant.MerchantModel;
 
 /**
  * @ClassName: MerchantService
@@ -11,7 +11,7 @@ import com.manage.entity.table.Merchant;
  */
 public interface MerchantService
 {
-    Ret registerMerchant(Merchant merchant);
+    Ret registerMerchant(MerchantModel merchant);
 
-    Ret updateMerchant(Merchant merchant);
+    Ret updateMerchant(MerchantModel merchant);
 }

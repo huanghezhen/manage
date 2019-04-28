@@ -11,7 +11,8 @@ public class Const
     // 成功
     public static final String SUCCEED = "0";
     public static final String SUCCEED_MSG = "成功";
-    public static final String SESSIONUSER = "SESSIONUSER";
+    public static final String SESSION_USER = "SESSION_USER";
+    public static final String SESSION_CODE = "SESSION_CODE";
 
     public enum failedEnum{
         SAVE_MERCHANT_FAILED("-1", "注册商户失败"),

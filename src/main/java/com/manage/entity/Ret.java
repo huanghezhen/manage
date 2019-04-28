@@ -23,8 +23,8 @@ public class Ret<T>
     public static Ret getRet(String code,String msg){
         return new Ret(code,msg);
     }
-    public static<T> Ret<T> getRetT(){
-        return new Ret<>(Const.SUCCEED,Const.SUCCEED_MSG);
+    public static<T> Ret<T> getRetT(T data){
+        return new Ret<>(data,Const.SUCCEED,Const.SUCCEED_MSG);
     }
 
     public Ret()

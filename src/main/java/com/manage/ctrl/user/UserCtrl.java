@@ -3,8 +3,6 @@ package com.manage.ctrl.user;
 import com.manage.entity.Ret;
 import com.manage.entity.user.UserLoginModel;
 import com.manage.service.iface.user.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +27,16 @@ public class UserCtrl
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public Ret login(UserLoginModel userLoginModel,HttpServletRequest request){
         Ret ret = userService.login(userLoginModel, request);
+        return ret;
+    }
+    @RequestMapping(value = "/logout",method = RequestMethod.GET)
+    public Ret logout(String str,HttpServletRequest request){
+        Ret ret = userService.logout(request);
+        return ret;
+    }
+    @RequestMapping(value = "/home",method = RequestMethod.GET)
+    public Ret home(String str,HttpServletRequest request){
+        Ret ret = userService.home(request);
         return ret;
     }
 

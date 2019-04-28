@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface UserService
 {
     Ret login(UserLoginModel userLoginModel, HttpServletRequest request);
-
+    Ret home(HttpServletRequest request);
+    Ret logout(HttpServletRequest request);
     void getCode(HttpServletRequest request, HttpServletResponse response);
 }

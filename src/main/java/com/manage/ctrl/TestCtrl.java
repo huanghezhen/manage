@@ -22,8 +22,7 @@ public class TestCtrl
 
     @RequestMapping(value = "/getSeq",method = RequestMethod.GET)
     public Ret<String> getSeq(){
-        Ret<String> ret = Ret.getRetT();
-        ret.setData(sequenceGenerator.next());
+        Ret<String> ret = Ret.getRetT(sequenceGenerator.next());
         return ret;
     }
 

@@ -48,7 +48,7 @@
           </li>
           <li class="layui-nav-item" lay-unselect>
             <a href="javascript:;">
-              <cite>贤心</cite>
+              <cite id="userName"></cite>
             </a>
             <dl class="layui-nav-child">
               <dd><a lay-href="set/user/info.html">基本资料</a></dd>
@@ -71,7 +71,7 @@
             <span>hhz shop</span>
           </div>
           <ul class="layui-nav layui-nav-tree" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
-            <li class="layui-nav-item"><a lay-href="home/home.html">首页</a></li>
+            <li class="layui-nav-item" class="layui-this"><a lay-href="home/home.html">首页</a></li>
             <li class="layui-nav-item"><a lay-href="home/console.html">产品</a></li>
           </ul>
         </div>
@@ -123,22 +123,13 @@
     var $ = layui.$
             ,admin = layui.admin
             ,pathUrl = layui.setter.pathUrl;
-
-
     //请求登入接口
     admin.req({
-      url: pathUrl+'/testCtrl/getSeq' //实际使用请改成服务端真实接口
+      url: pathUrl+'/userCtrl/home' //实际使用请改成服务端真实接口
       ,data: {}
       ,done: function(res){
-        /*layer.msg('登入成功', {
-          offset: '15px'
-          ,icon: 1
-          ,time: 1000
-        }, function(){
-          location.href = '../index.html'; //后台主页
-        });*/
+          $("#userName").html(res.data.userName);
       }
-
     });
   });
   </script>

@@ -52,6 +52,23 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
+    public Ret home(HttpServletRequest request)
+    {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(Const.SESSION_USER);
+        Ret<User> ret = Ret.getRetT(user);
+        return ret;
+    }
+
+    @Override
+    public Ret logout(HttpServletRequest request)
+    {
+        HttpSession session = request.getSession();
+        session.removeAttribute(Const.SESSION_USER);
+        return Ret.getRet();
+    }
+
+    @Override
     public void getCode(HttpServletRequest request, HttpServletResponse response)
     {
         response.reset();

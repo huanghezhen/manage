@@ -36,16 +36,16 @@ public class CtrlAspect
     public void deBefore(JoinPoint joinPoint)
     {
         methodName = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
-        logger.info("开始---------------------------------------------------------------------------------");
-        logger.info("-----请求开始：" + methodName);
+        logger.info("---------------------------------------------------------------------------------开始");
+        logger.info("请求开始：" + methodName);
         Object param = joinPoint.getArgs()[0];
         if (param != null)
         {
-            logger.info("-----接口请求参数：" + param);
+            logger.info("接口请求参数：" + param);
         }
         else
         {
-            logger.info("-----接口请求参数为空");
+            logger.info("接口请求参数为空");
         }
 
     }
@@ -55,14 +55,14 @@ public class CtrlAspect
     {
         if (ret != null)
         {
-            logger.info("-----请求返回结果：" + ret);
+            logger.info("请求返回结果：" + ret);
         }
         else
         {
-            logger.info("-----请求返回结果为空");
+            logger.info("请求返回结果为空");
         }
-        logger.info("-----请求结束：" + methodName);
-        logger.info("结束---------------------------------------------------------------------------------");
+        logger.info("请求结束：" + methodName);
+        logger.info("---------------------------------------------------------------------------------结束");
     }
 
     @Around("ctrlPointCut()")

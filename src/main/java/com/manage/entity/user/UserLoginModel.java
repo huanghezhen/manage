@@ -12,22 +12,13 @@ import io.swagger.annotations.ApiModel;
 @ApiModel
 public class UserLoginModel
 {
-    // 用户名称
-    private String userName;
+    // 用户编码
+    private String userCode;
     // 用户密码
     private String userPasswd;
     // 验证码
     private String code;
 
-    public String getUserName()
-    {
-        return userName;
-    }
-
-    public void setUserName(String userName)
-    {
-        this.userName = userName;
-    }
 
     public String getUserPasswd()
     {
@@ -49,12 +40,22 @@ public class UserLoginModel
         this.code = code;
     }
 
+    public String getUserCode()
+    {
+        return userCode;
+    }
+
+    public void setUserCode(String userCode)
+    {
+        this.userCode = userCode;
+    }
+
     @Override
     public String toString()
     {
         final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"userName\":\"")
-                .append(userName).append('\"');
+        sb.append("\"userCode\":\"")
+                .append(userCode).append('\"');
         sb.append(",\"userPasswd\":\"")
                 .append(userPasswd).append('\"');
         sb.append(",\"code\":\"")

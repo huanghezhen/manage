@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manage.dao.user.UserMapper" >
+    <select id="getUser" resultType="com.manage.entity.table.User">
+        select user_code, merchant_code, user_name, user_passwd, state, create_time, update_time from user
+        where user_code = #{userCode}
+    </select>
+</mapper>

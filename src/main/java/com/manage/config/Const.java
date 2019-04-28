@@ -16,7 +16,11 @@ public class Const
 
     public enum failedEnum{
         SAVE_MERCHANT_FAILED("-1", "注册商户失败"),
-        UPDATE_MERCHANT_FAILED("-2", "修改商户失败")
+        UPDATE_MERCHANT_FAILED("-2", "修改商户失败"),
+        SESSION_CODE_FAILED("-3", "验证码错误"),
+        UNUSER("-4", "用户不存在"),
+        UNPASSWD("-5", "密码错误"),
+        UNLOGIN("-6", "密码错误")
         ;
 
         // 错误码

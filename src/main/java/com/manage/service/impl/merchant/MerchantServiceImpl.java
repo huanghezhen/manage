@@ -26,7 +26,7 @@ public class MerchantServiceImpl implements MerchantService
         if (i<=0){
             return Ret.getRet(Const.failedEnum.SAVE_MERCHANT_FAILED.getCode(),Const.failedEnum.SAVE_MERCHANT_FAILED.getMsg());
         }else{
-            return Ret.getRet(Const.SUCCEED);
+            return Ret.getRet();
         }
     }
 
@@ -37,7 +37,7 @@ public class MerchantServiceImpl implements MerchantService
         if (i<=0){
             return Ret.getRet(Const.failedEnum.UPDATE_MERCHANT_FAILED.getCode(),Const.failedEnum.UPDATE_MERCHANT_FAILED.getMsg());
         }else{
-            return Ret.getRet(Const.SUCCEED);
+            return Ret.getRet();
         }
 
     }

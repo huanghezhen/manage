@@ -17,8 +17,8 @@ public class Ret<T>
     // 消息
     private String msg;
 
-    public static Ret getRet(String code){
-        return new Ret(code);
+    public static Ret getRet(){
+        return new Ret(Const.SUCCEED,Const.SUCCEED_MSG);
     }
     public static Ret getRet(String code,String msg){
         return new Ret(code,msg);

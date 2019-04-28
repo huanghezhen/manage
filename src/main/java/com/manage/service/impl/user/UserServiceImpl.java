@@ -1,11 +1,14 @@
 package com.manage.service.impl.user;
 
 import com.manage.config.Const;
+import com.manage.dao.user.UserMapper;
 import com.manage.entity.Ret;
+import com.manage.entity.table.User;
 import com.manage.entity.user.UserLoginModel;
 import com.manage.service.iface.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -27,11 +30,25 @@ import java.util.Random;
 public class UserServiceImpl implements UserService
 {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
+    @Autowired
+    private UserMapper userMapper;
     @Override
     public Ret login(UserLoginModel userLoginModel, HttpServletRequest request)
     {
-        return Ret.getRet("");
+        HttpSession session = request.getSession();
+        String code = (String) session.getAttribute(Const.SESSION_CODE);
+        if (code == null || userLoginModel.getCode() == null || !code.equals(userLoginModel.getCode())){
+            return Ret.getRet(Const.failedEnum.SESSION_CODE_FAILED.getCode(),Const.failedEnum.SESSION_CODE_FAILED.getMsg());
+        }
+        User user = userMapper.getUser(userLoginModel.getUserCode());
+        if (user == null){
+            return Ret.getRet(Const.failedEnum.UNUSER.getCode(),Const.failedEnum.UNUSER.getMsg());
+        }
+        if (userLoginModel.getUserPasswd() == null || !userLoginModel.getUserPasswd().equals(user.getUserPasswd())){
+            return Ret.getRet(Const.failedEnum.UNPASSWD.getCode(),Const.failedEnum.UNPASSWD.getMsg());
+        }
+        session.setAttribute(Const.SESSION_USER,user);
+        return Ret.getRet();
     }
 
     @Override

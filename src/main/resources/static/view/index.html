@@ -51,8 +51,8 @@
               <cite id="userName"></cite>
             </a>
             <dl class="layui-nav-child">
-              <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-              <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+              <dd><a lay-href="setting/info.html">基本资料</a></dd>
+              <dd><a lay-href="setting/password.html">修改密码</a></dd>
               <hr>
               <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
             </dl>
@@ -71,8 +71,84 @@
             <span>hhz shop</span>
           </div>
           <ul class="layui-nav layui-nav-tree" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
-            <li class="layui-nav-item" class="layui-this"><a lay-href="home/home.html">首页</a></li>
-            <li class="layui-nav-item"><a lay-href="home/console.html">产品</a></li>
+            <li data-name="home" class="layui-nav-item layui-nav-itemed">
+              <a href="javascript:;" lay-tips="主页" lay-direction="2">
+                <i class="layui-icon layui-icon-home"></i>
+                <cite>主页</cite>
+              </a>
+              <dl class="layui-nav-child">
+                <dd data-name="home" class="layui-this">
+                  <a lay-href="home/home.html">首页</a>
+                </dd>
+              </dl>
+            </li>
+            <li data-name="picture" class="layui-nav-item">
+              <a href="javascript:;" lay-tips="图片管理" lay-direction="2">
+                <i class="layui-icon layui-icon-template"></i>
+                <cite>图片管理</cite>
+              </a>
+              <dl class="layui-nav-child">
+                <dd data-name="picture"><a lay-href="picture/catalog.html">设置图片分类</a></dd>
+                <dd data-name="picture"><a lay-href="picture/pictureInfo.html">添加图片信息</a></dd>
+              </dl>
+            </li>
+
+            <li data-name="picture" class="layui-nav-item">
+              <a href="javascript:;" lay-tips="商品管理" lay-direction="2">
+                <i class="layui-icon layui-icon-template"></i>
+                <cite>商品管理</cite>
+              </a>
+              <dl class="layui-nav-child">
+                <dd data-name="picture"><a lay-href="picture/catalog.html">设置商品分类</a></dd>
+                <dd data-name="picture"><a lay-href="picture/pictureInfo.html">添加商品信息</a></dd>
+              </dl>
+            </li>
+
+
+            <li data-name="picture" class="layui-nav-item">
+              <a href="javascript:;" lay-tips="活动管理" lay-direction="2">
+                <i class="layui-icon layui-icon-template"></i>
+                <cite>活动管理</cite>
+              </a>
+              <dl class="layui-nav-child">
+                <dd data-name="picture"><a lay-href="picture/catalog.html">优惠券</a></dd>
+                <dd data-name="picture"><a lay-href="picture/pictureInfo.html">抽奖活动</a></dd>
+              </dl>
+            </li>
+
+            <li data-name="picture" class="layui-nav-item">
+              <a href="javascript:;" lay-tips="营销管理" lay-direction="2">
+                <i class="layui-icon layui-icon-template"></i>
+                <cite>营销管理</cite>
+              </a>
+              <dl class="layui-nav-child">
+                <dd data-name="picture"><a lay-href="picture/catalog.html">注册营销</a></dd>
+                <dd data-name="picture"><a lay-href="picture/pictureInfo.html">客群筛选</a></dd>
+              </dl>
+            </li>
+
+            <li data-name="picture" class="layui-nav-item">
+              <a href="javascript:;" lay-tips="数据统计" lay-direction="2">
+                <i class="layui-icon layui-icon-template"></i>
+                <cite>数据统计</cite>
+              </a>
+              <dl class="layui-nav-child">
+                <dd data-name="picture"><a lay-href="picture/catalog.html">订单记录</a></dd>
+                <dd data-name="picture"><a lay-href="picture/pictureInfo.html">会员统计</a></dd>
+                <dd data-name="picture"><a lay-href="picture/pictureInfo.html">商品统计</a></dd>
+              </dl>
+            </li>
+
+            <li data-name="setting" class="layui-nav-item">
+              <a href="javascript:;" lay-tips="设置" lay-direction="2">
+                <i class="layui-icon layui-icon-set"></i>
+                <cite>设置</cite>
+              </a>
+              <dl class="layui-nav-child">
+                <dd><a lay-href="setting/info.html">基本资料</a></dd>
+                <dd><a lay-href="setting/password.html">修改密码</a></dd>
+              </dl>
+            </li>
           </ul>
         </div>
       </div>

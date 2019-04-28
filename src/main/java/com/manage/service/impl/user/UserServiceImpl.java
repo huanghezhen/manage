@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService
                 }else{g.drawString(rand,10*i+4,UpNum);}
             }
         }
-        logger.info("/userCtrl/getCode sRand : " + sRand);
+        logger.info("sRand : " + sRand);
         HttpSession session   =   request.getSession();
         session.setAttribute("code",sRand);
         g.dispose();

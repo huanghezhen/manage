@@ -11,7 +11,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 
 /**
  * @ClassName: CtrlAspect
@@ -23,10 +22,11 @@ import java.util.Arrays;
 @Component
 public class CtrlAspect
 {
-    private   HttpServletRequest  request;
-    private   HttpServletResponse response;
-    private String methodName;
+    private       HttpServletRequest  request;
+    private       HttpServletResponse response;
+    private       String              methodName;
     private final Logger              logger = LoggerFactory.getLogger(this.getClass());
+
     @Pointcut("execution(* com.manage.ctrl..*.*(..))")
     public void ctrlPointCut()
     {
@@ -36,17 +36,33 @@ public class CtrlAspect
     public void deBefore(JoinPoint joinPoint)
     {
         methodName = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
-        logger.info("---------------------------------------------------------------------------------");
-        logger.info("请求开始："+methodName);
-        logger.info("接口请求参数："+Arrays.toString(joinPoint.getArgs()));
+        logger.info("开始---------------------------------------------------------------------------------");
+        logger.info("-----请求开始：" + methodName);
+        Object param = joinPoint.getArgs()[0];
+        if (param != null)
+        {
+            logger.info("-----接口请求参数：" + param);
+        }
+        else
+        {
+            logger.info("-----接口请求参数为空");
+        }
+
     }
 
     @AfterReturning(returning = "ret", pointcut = "ctrlPointCut()")
     public void doAfterReturning(Object ret)
     {
-        logger.info("请求返回结果："+ ret);
-        logger.info("请求结束："+methodName);
-        logger.info("---------------------------------------------------------------------------------");
+        if (ret != null)
+        {
+            logger.info("-----请求返回结果：" + ret);
+        }
+        else
+        {
+            logger.info("-----请求返回结果为空");
+        }
+        logger.info("-----请求结束：" + methodName);
+        logger.info("结束---------------------------------------------------------------------------------");
     }
 
     @Around("ctrlPointCut()")

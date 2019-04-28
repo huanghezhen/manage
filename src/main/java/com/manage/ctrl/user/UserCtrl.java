@@ -39,7 +39,7 @@ public class UserCtrl
      * @param response
      */
     @RequestMapping(value = "/getCode",method = RequestMethod.GET)
-    public void getCode(HttpServletRequest request, HttpServletResponse response){
+    public void getCode(String str,HttpServletRequest request, HttpServletResponse response){
         userService.getCode(request,response);
     }
 

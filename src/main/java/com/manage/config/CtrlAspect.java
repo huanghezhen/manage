@@ -1,8 +1,10 @@
 package com.manage.config;
 
-import org.aspectj.lang.JoinPoint;
+import com.manage.entity.Ret;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -10,7 +12,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @ClassName: CtrlAspect
@@ -22,37 +24,41 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class CtrlAspect
 {
-    private       HttpServletRequest  request;
-    private       HttpServletResponse response;
-    private       String              methodName;
     private final Logger              logger = LoggerFactory.getLogger(this.getClass());
 
     @Pointcut("execution(* com.manage.ctrl..*.*(..))")
     public void ctrlPointCut()
     {
     }
-
-    @Before("ctrlPointCut()")
-    public void deBefore(JoinPoint joinPoint)
+    @Around("ctrlPointCut()")
+    public Object around(ProceedingJoinPoint pjp) throws Throwable
     {
-        methodName = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
+        String methodName = pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName();
         logger.info("---------------------------------------------------------------------------------开始");
         logger.info("请求开始：" + methodName);
-        Object param = joinPoint.getArgs()[0];
-        if (param != null)
-        {
-            logger.info("接口请求参数：" + param);
-        }
-        else
-        {
+        if (pjp.getArgs().length > 0){
+            Object param = pjp.getArgs()[0];
+            if (param != null)
+            {
+                logger.info("接口请求参数：" + param);
+            }
+            else
+            {
+                logger.info("接口请求参数为空");
+            }
+        }else{
             logger.info("接口请求参数为空");
         }
-
-    }
-
-    @AfterReturning(returning = "ret", pointcut = "ctrlPointCut()")
-    public void doAfterReturning(Object ret)
-    {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        HttpSession session = request.getSession();
+        Object user = session.getAttribute(Const.SESSION_USER);
+        Object ret;
+        if (Const.CAN_NOT_LOGIN_LIST.contains(methodName) || user != null){
+            ret = pjp.proceed();
+        }else{
+            ret = Ret.getRet(Const.failedEnum.UNLOGIN.getCode(),Const.failedEnum.UNLOGIN.getMsg());
+        }
         if (ret != null)
         {
             logger.info("请求返回结果：" + ret);
@@ -63,14 +69,6 @@ public class CtrlAspect
         }
         logger.info("请求结束：" + methodName);
         logger.info("---------------------------------------------------------------------------------结束");
-    }
-
-    @Around("ctrlPointCut()")
-    public Object around(ProceedingJoinPoint pjp) throws Throwable
-    {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        request = attributes.getRequest();
-        response = attributes.getResponse();
-        return pjp.proceed();
+        return ret;
     }
 }

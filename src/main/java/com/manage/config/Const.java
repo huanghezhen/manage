@@ -1,5 +1,8 @@
 package com.manage.config;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @ClassName: Const
  * @Description: 常量类
@@ -8,6 +11,7 @@ package com.manage.config;
  */
 public class Const
 {
+    public static List<String> CAN_NOT_LOGIN_LIST = new LinkedList<>();
     // 成功
     public static final String SUCCEED = "0";
     public static final String SUCCEED_MSG = "成功";
@@ -20,7 +24,7 @@ public class Const
         SESSION_CODE_FAILED("-3", "验证码错误"),
         UNUSER("-4", "用户不存在"),
         UNPASSWD("-5", "密码错误"),
-        UNLOGIN("-6", "密码错误")
+        UNLOGIN("-6", "用户未登陆")
         ;
 
         // 错误码

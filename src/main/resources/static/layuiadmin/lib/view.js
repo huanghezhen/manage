@@ -47,9 +47,9 @@ layui.define(['laytpl', 'layer'], function(exports){
       key: setter.request.tokenName
       ,remove: true
     });
-    
+
     //跳转到登入页
-    //location.hash = '/user/login'; 
+    //location.hash = '/user/login';
     callback && callback();
   };
   
@@ -97,7 +97,7 @@ layui.define(['laytpl', 'layer'], function(exports){
         
         //登录状态失效，清除本地 access_token，并强制跳转到登入页
         else if(res[response.statusName] == statusCode.logout){
-          view.exit();
+          location.href="/view/user/login.html"
         }
         
         //其它异常

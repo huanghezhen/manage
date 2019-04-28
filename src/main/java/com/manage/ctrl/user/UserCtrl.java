@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/userCtrl")
 public class UserCtrl
 {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private UserService userService;
 

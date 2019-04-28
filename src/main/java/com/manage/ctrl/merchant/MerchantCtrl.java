@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/merchantCtrl")
 public class MerchantCtrl
 {
-    private final Logger          logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private       MerchantService merchantService;
 

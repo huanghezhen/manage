@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 /**
  * @ClassName: DefaultView
- * @Description: TODO
+ * @Description: 默认页面的设置   默认为登陆页面
  * @author: cl-Z
  * @date: 2019/5/6 15:17
  * @Version: V1.0

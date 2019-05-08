@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manage.dao.product.ProductMapper" >
+    <sql id="product_field">
+         PRODUCT_ID,PRODUCT_NAME,PRODUCT_PRICE,PRODUCT_DESCRIPTION,PRODUCT_ICON,PRODUCT_STATUS,CATEGORY_TYPE,CREATE_TIME,UPDATE_TIME
+    </sql>
+    <insert id="saveProduct" parameterType="com.manage.entity.product.ProductModel">
+      INSERT INTO PRODUCT (PRODUCT_ID,PRODUCT_NAME,PRODUCT_PRICE,PRODUCT_DESCRIPTION,PRODUCT_ICON,PRODUCT_STATUS,CATEGORY_TYPE,CREATE_TIME,UPDATE_TIME)
+      VALUES
+      (#{productId},#{productName},#{productPrice},#{productDescription},#{productIcon},#{productStatus},#{categoryType},#{createTime},#{updateTime})
+    </insert>
+
+    <select id="findOne" resultType="com.manage.entity.product.ProductModel" >
+        SELECT <include refid="product_field"></include> FROM product WHERE  PRODUCT_ID =#{productId}
+    </select>
+
+    <select id="findUpAll" resultType="com.manage.entity.product.ProductModel">
+        SELECT <include refid="product_field"></include> FROM  product WHERE PRODUCT_STATUS=#{@com.manage.config.Const@PRODUCT_UP_STATUS}
+    </select>
+
+    <select id="findAll" resultType="com.manage.entity.product.ProductModel">
+        SELECT  <include refid="product_field"></include> FROM product
+    </select>
+
+    <update id="updateProduct" parameterType="com.manage.entity.product.ProductModel">
+        update product
+        <set>
+            <if test="productName!=null and productName!=''">
+                product_name = #{productName},
+            </if>
+            <if test="productPrice!=null and productPrice!=''">
+                PRODUCT_PRICE = #{productPrice},
+            </if>
+            <if test="productDescription!=null and productDescription!=''">
+                PRODUCT_DESCRIPTION = #{productDescription},
+            </if>
+            <if test="productIcon!=null and productIcon!=''">
+                PRODUCT_ICON = #{productIcon},
+            </if>
+            <if test="productStatus!=null and productStatus!=''">
+                PRODUCT_STATUS = #{productStatus},
+            </if>
+            <if test="categoryType!=null and categoryType!=''">
+                CATEGORY_TYPE = #{categoryType},
+            </if>
+            <if test="createTime!=null and createTime!=''">
+                CREATE_TIME = #{createTime},
+            </if>
+            <if test="updateTime!=null and updateTime!=''">
+                UPDATE_TIME = #{updateTime},
+            </if>
+        </set>
+        where PRODUCT_ID = #{productId}
+    </update>
+
+
+</mapper>

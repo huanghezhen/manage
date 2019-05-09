@@ -12,7 +12,18 @@ public class ImgCategory
 	private String name;
 	// 创建时间
 	private Date createTime;
+	// 商户编码
+	private String merchantCode;
 
+	public String getMerchantCode()
+	{
+		return merchantCode;
+	}
+
+	public void setMerchantCode(String merchantCode)
+	{
+		this.merchantCode = merchantCode;
+	}
 
 	public Integer getId()
 	{
@@ -57,4 +68,21 @@ public class ImgCategory
 		this.createTime = createTime;
 	}
 
+	@Override
+	public String toString()
+	{
+		final StringBuilder sb = new StringBuilder("{");
+		sb.append("\"id\":")
+				.append(id);
+		sb.append(",\"parentId\":")
+				.append(parentId);
+		sb.append(",\"name\":\"")
+				.append(name).append('\"');
+		sb.append(",\"createTime\":\"")
+				.append(createTime).append('\"');
+		sb.append(",\"merchantCode\":\"")
+				.append(merchantCode).append('\"');
+		sb.append('}');
+		return sb.toString();
+	}
 }

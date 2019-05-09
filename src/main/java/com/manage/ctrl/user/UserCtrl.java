@@ -26,18 +26,15 @@ public class UserCtrl
 
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public Ret login(UserLoginModel userLoginModel,HttpServletRequest request){
-        Ret ret = userService.login(userLoginModel, request);
-        return ret;
+        return userService.login(userLoginModel, request);
     }
     @RequestMapping(value = "/logout",method = RequestMethod.GET)
     public Ret logout(String str,HttpServletRequest request){
-        Ret ret = userService.logout(request);
-        return ret;
+        return userService.logout(request);
     }
     @RequestMapping(value = "/home",method = RequestMethod.GET)
     public Ret home(String str,HttpServletRequest request){
-        Ret ret = userService.home(request);
-        return ret;
+        return userService.home(request);
     }
 
     /**

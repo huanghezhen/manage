@@ -9,7 +9,7 @@ public class ImgCategory
 	// 父类编码
 	private Integer parentId;
 	// 名称
-	private String name;
+	private String label;
 	// 创建时间
 	private Date createTime;
 	// 商户编码
@@ -46,17 +46,15 @@ public class ImgCategory
 		this.parentId = parentId;
 	}
 
-
-	public String getName()
+	public String getLabel()
 	{
-		return name;
+		return label;
 	}
 
-	public void setName(String name)
+	public void setLabel(String label)
 	{
-		this.name = name;
+		this.label = label;
 	}
-
 
 	public Date getCreateTime()
 	{
@@ -76,8 +74,8 @@ public class ImgCategory
 				.append(id);
 		sb.append(",\"parentId\":")
 				.append(parentId);
-		sb.append(",\"name\":\"")
-				.append(name).append('\"');
+		sb.append(",\"label\":\"")
+				.append(label).append('\"');
 		sb.append(",\"createTime\":\"")
 				.append(createTime).append('\"');
 		sb.append(",\"merchantCode\":\"")

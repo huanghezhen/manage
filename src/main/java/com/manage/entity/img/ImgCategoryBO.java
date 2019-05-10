@@ -13,16 +13,15 @@ import java.util.List;
 public class ImgCategoryBO extends ImgCategory
 {
     // 子类集合
-    private List<ImgCategoryBO> imgCategorieList;
+    private List<ImgCategoryBO> children;
 
-
-    public List<ImgCategoryBO> getImgCategorieList()
+    public List<ImgCategoryBO> getChildren()
     {
-        return imgCategorieList;
+        return children;
     }
 
-    public void setImgCategorieList(List<ImgCategoryBO> imgCategorieList)
+    public void setChildren(List<ImgCategoryBO> children)
     {
-        this.imgCategorieList = imgCategorieList;
+        this.children = children;
     }
 }

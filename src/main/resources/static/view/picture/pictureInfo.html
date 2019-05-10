@@ -55,6 +55,8 @@
     }).use(['index','eleTree'],function () {
         var $ = layui.jquery;
         var eleTree = layui.eleTree;
+        var pathUrl = layui.setter.pathUrl;
+        var admin = layui.admin;
         var data=[
             {
                 "id": 1,
@@ -128,16 +130,22 @@
                 ]
             }
         ];
-        var obj={
-            elem: '.ele1',
-            data: data,
-            // url: "../eleTree/tree.json",
-            renderAfterExpand: true,
-            expandOnClickNode: true,
-            defaultCheckedKeys: [23]
-        }
 
-        var el1=eleTree.render(obj);
+        admin.req({
+            url: pathUrl+'/imgCtrl/getImgCategory' //实际使用请改成服务端真实接口
+            ,data: {}
+            ,done: function(res){
+                var obj={
+                    elem: '.ele1',
+                    data: res.data.children,
+                    renderAfterExpand: true,
+                    expandOnClickNode: true,
+                    defaultCheckedKeys: [23]
+                }
+
+                var el1=eleTree.render(obj);
+            }
+        });
     });
 </script>
 </body>

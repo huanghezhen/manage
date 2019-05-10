@@ -57,11 +57,11 @@ public class ImgServiceImpl implements ImgService
     private ImgCategoryBO getImgCategoryTree(List<ImgCategoryBO> imgCategorieList){
         ImgCategoryBO imgCategoryBO = new ImgCategoryBO();
         imgCategoryBO.setId(0);
-        imgCategoryBO.setName("全部");
-        imgCategoryBO.setImgCategorieList(new ArrayList<>());
+        imgCategoryBO.setLabel("全部");
+        imgCategoryBO.setChildren(new ArrayList<>());
         for (ImgCategoryBO imgCategory:imgCategorieList){
             if (0 == imgCategory.getParentId()){
-                imgCategoryBO.getImgCategorieList().add(findImgCategoryChildren(imgCategory,imgCategorieList));
+                imgCategoryBO.getChildren().add(findImgCategoryChildren(imgCategory,imgCategorieList));
             }
         }
         return imgCategoryBO;
@@ -69,8 +69,8 @@ public class ImgServiceImpl implements ImgService
     private ImgCategoryBO findImgCategoryChildren(ImgCategoryBO imgCategoryP,List<ImgCategoryBO> imgCategorieList){
         for (ImgCategoryBO imgCategoryC:imgCategorieList){
             if (imgCategoryP.getId() == imgCategoryC.getParentId()){
-                imgCategoryP.setImgCategorieList(new ArrayList<>());
-                imgCategoryP.getImgCategorieList().add(findImgCategoryChildren(imgCategoryC,imgCategorieList));
+                imgCategoryP.setChildren(new ArrayList<>());
+                imgCategoryP.getChildren().add(findImgCategoryChildren(imgCategoryC,imgCategorieList));
             }
         }
         return imgCategoryP;

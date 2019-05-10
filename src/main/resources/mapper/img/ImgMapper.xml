@@ -4,4 +4,17 @@
     <select id="listImgCategory" resultType="com.manage.entity.img.ImgCategoryBO">
         select id, parent_id, name, merchant_code, create_time from img_category where merchant_code = #{merchantCode} order by id
     </select>
+
+    <insert id="addImgCategory">
+        insert into img_category (parent_id, name, merchant_code)
+         values (#{parentId},#{name},#{merchantCode})
+    </insert>
+
+    <update id="editImgCategory">
+        update img_category set name = #{name} where id = #{id}
+    </update>
+
+    <delete id="deleteImgCategory">
+        delete from img_category where id = #{id}
+    </delete>
 </mapper>

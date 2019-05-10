@@ -4,6 +4,7 @@ import com.manage.config.Const;
 import com.manage.dao.img.ImgMapper;
 import com.manage.entity.Ret;
 import com.manage.entity.img.ImgCategoryBO;
+import com.manage.entity.table.ImgCategory;
 import com.manage.entity.table.User;
 import com.manage.service.iface.img.ImgService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,24 @@ public class ImgServiceImpl implements ImgService
         List<ImgCategoryBO> imgCategories = imgMapper.listImgCategory(user.getMerchantCode());
         ImgCategoryBO imgCategoryTree = getImgCategoryTree(imgCategories);
         return Ret.getRetT(imgCategoryTree);
+    }
+
+    @Override
+    public Ret addImgCategory(ImgCategory imgCategory)
+    {
+        return null;
+    }
+
+    @Override
+    public Ret editImgCategory(ImgCategory imgCategory)
+    {
+        return null;
+    }
+
+    @Override
+    public Ret deleteImgCategory(ImgCategory imgCategory)
+    {
+        return null;
     }
 
     private ImgCategoryBO getImgCategoryTree(List<ImgCategoryBO> imgCategorieList){

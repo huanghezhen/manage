@@ -1,6 +1,7 @@
 package com.manage.dao.img;
 
 import com.manage.entity.img.ImgCategoryBO;
+import com.manage.entity.table.ImgCategory;
 
 import java.util.List;
 
@@ -13,4 +14,7 @@ import java.util.List;
 public interface ImgMapper
 {
     List<ImgCategoryBO> listImgCategory(String merchantCode);
+    int addImgCategory(ImgCategory imgCategory);
+    int editImgCategory(ImgCategory imgCategory);
+    int deleteImgCategory(ImgCategory imgCategory);
 }

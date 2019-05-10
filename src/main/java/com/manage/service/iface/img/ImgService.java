@@ -1,6 +1,7 @@
 package com.manage.service.iface.img;
 
 import com.manage.entity.Ret;
+import com.manage.entity.table.ImgCategory;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,4 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface ImgService
 {
     Ret getImgCategory(HttpServletRequest request);
+    Ret addImgCategory(ImgCategory imgCategory);
+    Ret editImgCategory(ImgCategory imgCategory);
+    Ret deleteImgCategory(ImgCategory imgCategory);
 }

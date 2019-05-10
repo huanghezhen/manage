@@ -32,7 +32,9 @@ public class Const
         PRODUCT_CATEGORY_NOT_EXIT("-9","此商品分类不存在"),
         PRODUCT_CATEGORY_SON_NOT_EXIT("-10","此商品分类不存在"),
         SAVE_ERROR("-11","新增失败"),
-        UPDATE_ERROR("-12","修改失败")
+        UPDATE_ERROR("-12","修改失败"),
+        ADD_IMG_CATEGORY_ERROR("-13","新增分类失败"),
+        ALL_CATEGORY_ERROR("-14","全部分类不能添加同级分类")
         ;
 
         // 错误码

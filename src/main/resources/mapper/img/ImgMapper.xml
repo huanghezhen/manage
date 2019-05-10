@@ -7,14 +7,17 @@
 
     <insert id="addImgCategory">
         insert into img_category (parent_id, name, merchant_code)
-         values (#{parentId},#{name},#{merchantCode})
+         values (#{parentId},#{label},#{merchantCode})
     </insert>
 
     <update id="editImgCategory">
-        update img_category set name = #{name} where id = #{id}
+        update img_category set name = #{label} where id = #{id}
     </update>
 
     <delete id="deleteImgCategory">
         delete from img_category where id = #{id}
     </delete>
+    <select id="getParentId" resultType="int">
+        select parent_id from img_category where id = #{id}
+    </select>
 </mapper>

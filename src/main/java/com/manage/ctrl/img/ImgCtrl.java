@@ -1,6 +1,7 @@
 package com.manage.ctrl.img;
 
 import com.manage.entity.Ret;
+import com.manage.entity.img.ImgCategoryBO;
 import com.manage.entity.table.ImgCategory;
 import com.manage.service.iface.img.ImgService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class ImgCtrl
     }
 
     @RequestMapping(value = "/addImgCategory",method = RequestMethod.GET)
-    public Ret addImgCategory(ImgCategory imgCategory){
+    public Ret addImgCategory(ImgCategoryBO imgCategory){
         return imgService.addImgCategory(imgCategory);
     }
 

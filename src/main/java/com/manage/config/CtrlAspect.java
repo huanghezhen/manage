@@ -1,6 +1,7 @@
 package com.manage.config;
 
 import com.manage.entity.Ret;
+import com.manage.entity.table.User;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -52,6 +53,8 @@ public class CtrlAspect
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         HttpSession session = request.getSession();
+        // todo 上线去掉自动登陆功能
+        autoLogin(session);
         Object user = session.getAttribute(Const.SESSION_USER);
         Object ret;
         if (Const.CAN_NOT_LOGIN_LIST.contains(methodName) || user != null){
@@ -70,5 +73,14 @@ public class CtrlAspect
         logger.info("请求结束：" + methodName);
         logger.info("---------------------------------------------------------------------------------结束");
         return ret;
+    }
+
+    private void autoLogin(HttpSession session){
+        User user = new User();
+        user.setMerchantCode("hhz");
+        user.setUserCode("1");
+        user.setUserName("666");
+        user.setState(1);
+        session.setAttribute(Const.SESSION_USER,user);
     }
 }

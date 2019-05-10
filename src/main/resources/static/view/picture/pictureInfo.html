@@ -61,9 +61,10 @@
             url: pathUrl+'/imgCtrl/getImgCategory' //实际使用请改成服务端真实接口
             ,data: {}
             ,done: function(res){
+                var merchantCode = res.data[0].merchantCode;
                 var obj={
                     elem: '.ele1',
-                    data: res.data.children,
+                    data: res.data,
                     renderAfterExpand: true,
                     expandOnClickNode: true,
                     highlightCurrent: true,
@@ -80,12 +81,28 @@
 
                 // 添加子节点
                 eleTree.on("nodeAppend(data1)",function(e) {
+                    var p = e.data.id;
+                    var label = e.newData.label;
+                    admin.req({
+                        url: pathUrl + '/imgCtrl/addImgCategory' //实际使用请改成服务端真实接口
+                        , data: {"parentId":p,"label":label,"merchantCode":merchantCode}
+                        , done: function (res) {
 
+                        }
+                    });
                 });
 
                 // 添加节点之后
                 eleTree.on("nodeInsertAfter(data1)",function(d) {
+                    var p = d.data.id;
+                    var label = d.newData.label;
+                    admin.req({
+                        url: pathUrl + '/imgCtrl/addImgCategory' //实际使用请改成服务端真实接口
+                        , data: {"parentId":p,"label":label,"merchantCode":merchantCode,"addType":1}
+                        , done: function (res) {
 
+                        }
+                    });
                 });
                 // 修改
                 eleTree.on("nodeEdit(data1)",function(d) {

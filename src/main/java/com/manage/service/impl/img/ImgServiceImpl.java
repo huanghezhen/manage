@@ -32,14 +32,27 @@ public class ImgServiceImpl implements ImgService
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(Const.SESSION_USER);
         List<ImgCategoryBO> imgCategories = imgMapper.listImgCategory(user.getMerchantCode());
-        ImgCategoryBO imgCategoryTree = getImgCategoryTree(imgCategories);
-        return Ret.getRetT(imgCategoryTree);
+        ImgCategoryBO imgCategoryTree = getImgCategoryTree(imgCategories,user.getMerchantCode());
+        List<ImgCategoryBO> imgCategoryBOList = new ArrayList<>();
+        imgCategoryBOList.add(imgCategoryTree);
+        return Ret.getRetT(imgCategoryBOList);
     }
 
     @Override
-    public Ret addImgCategory(ImgCategory imgCategory)
+    public Ret addImgCategory(ImgCategoryBO imgCategory)
     {
-        return null;
+        if (1 == imgCategory.getAddType()){
+            if (0 == imgCategory.getParentId()){
+                return Ret.getRet(Const.failedEnum.ALL_CATEGORY_ERROR.getCode(),Const.failedEnum.ALL_CATEGORY_ERROR.getMsg());
+            }
+            imgCategory.setParentId(imgMapper.getParentId(imgCategory.getParentId()));
+        }
+        int i = imgMapper.addImgCategory(imgCategory);
+        if (i>0){
+            return Ret.getRet();
+        }else {
+            return Ret.getRet(Const.failedEnum.ADD_IMG_CATEGORY_ERROR.getCode(),Const.failedEnum.ADD_IMG_CATEGORY_ERROR.getMsg());
+        }
     }
 
     @Override
@@ -54,10 +67,11 @@ public class ImgServiceImpl implements ImgService
         return null;
     }
 
-    private ImgCategoryBO getImgCategoryTree(List<ImgCategoryBO> imgCategorieList){
+    private ImgCategoryBO getImgCategoryTree(List<ImgCategoryBO> imgCategorieList,String merchantCode){
         ImgCategoryBO imgCategoryBO = new ImgCategoryBO();
         imgCategoryBO.setId(0);
-        imgCategoryBO.setLabel("全部");
+        imgCategoryBO.setLabel("全部分类");
+        imgCategoryBO.setMerchantCode(merchantCode);
         imgCategoryBO.setChildren(new ArrayList<>());
         for (ImgCategoryBO imgCategory:imgCategorieList){
             if (0 == imgCategory.getParentId()){

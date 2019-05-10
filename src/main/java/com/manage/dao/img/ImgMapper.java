@@ -14,6 +14,7 @@ import java.util.List;
 public interface ImgMapper
 {
     List<ImgCategoryBO> listImgCategory(String merchantCode);
+    int getParentId(int id);
     int addImgCategory(ImgCategory imgCategory);
     int editImgCategory(ImgCategory imgCategory);
     int deleteImgCategory(ImgCategory imgCategory);

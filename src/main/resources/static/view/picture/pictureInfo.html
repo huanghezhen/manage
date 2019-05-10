@@ -57,80 +57,6 @@
         var eleTree = layui.eleTree;
         var pathUrl = layui.setter.pathUrl;
         var admin = layui.admin;
-        var data=[
-            {
-                "id": 1,
-                "label": "安徽省",
-                "children": [
-                    {
-                        "id": 2,
-                        "label": "马鞍山市",
-                        "disabled": true,
-                        "children": [
-                            {
-                                "id": 3,
-                                "label": "和县"
-                            },
-                            {
-                                "id": 4,
-                                "label": "花山区",
-                                "checked": true
-                            }
-                        ]
-                    },
-                    {
-                        "id": 22,
-                        "label": "淮北市",
-                        "children": [
-                            {
-                                "id": 23,
-                                "label": "濉溪县"
-                            },
-                            {
-                                "id": 24,
-                                "label": "相山区",
-                                "checked": true
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "id": 5,
-                "label": "河南省",
-                "children": [
-                    {
-                        "id": 6,
-                        "label": "郑州市"
-                    }
-                ]
-            },
-            {
-                "id": 10,
-                "label": "江苏省",
-                "children": [
-                    {
-                        "id": 11,
-                        "label": "苏州市"
-                    },
-                    {
-                        "id": 12,
-                        "label": "南京市",
-                        "children": [
-                            {
-                                "id": 13,
-                                "label": "姑苏区"
-                            },
-                            {
-                                "id": 14,
-                                "label": "相城区"
-                            }
-                        ]
-                    }
-                ]
-            }
-        ];
-
         admin.req({
             url: pathUrl+'/imgCtrl/getImgCategory' //实际使用请改成服务端真实接口
             ,data: {}
@@ -140,10 +66,36 @@
                     data: res.data.children,
                     renderAfterExpand: true,
                     expandOnClickNode: true,
-                    defaultCheckedKeys: [23]
+                    highlightCurrent: true,
+                    draggable: true,
+                    contextmenuList: ['add','edit','remove']
                 }
 
                 var el1=eleTree.render(obj);
+
+
+                eleTree.on("nodeClick(data1)",function(d) {
+
+                });
+
+                // 添加子节点
+                eleTree.on("nodeAppend(data1)",function(e) {
+
+                });
+
+                // 添加节点之后
+                eleTree.on("nodeInsertAfter(data1)",function(d) {
+
+                });
+                // 修改
+                eleTree.on("nodeEdit(data1)",function(d) {
+
+                });
+                // 删除
+                eleTree.on("nodeRemove(data1)",function(d) {
+
+                });
+
             }
         });
     });

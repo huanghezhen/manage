@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/style/eleTree.css" media="all">
     <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
 </head>
 <body>
@@ -26,7 +27,7 @@
                 <div class="layui-card-header">分类设置</div>
                 <div class="layui-card-body">
                     <div>
-                        dd
+                        <div class="eleTree ele1" lay-filter="data1"></div>
                     </div>
                 </div>
             </div>
@@ -49,8 +50,95 @@
     layui.config({
         base: '../../layuiadmin/' //静态资源所在路径
     }).extend({
-        index: 'lib/index' //主入口模块
-    }).use(['index']);
+        index: 'lib/index', //主入口模块
+        eleTree: 'lib/eleTree'
+    }).use(['index','eleTree'],function () {
+        var $ = layui.jquery;
+        var eleTree = layui.eleTree;
+        var data=[
+            {
+                "id": 1,
+                "label": "安徽省",
+                "children": [
+                    {
+                        "id": 2,
+                        "label": "马鞍山市",
+                        "disabled": true,
+                        "children": [
+                            {
+                                "id": 3,
+                                "label": "和县"
+                            },
+                            {
+                                "id": 4,
+                                "label": "花山区",
+                                "checked": true
+                            }
+                        ]
+                    },
+                    {
+                        "id": 22,
+                        "label": "淮北市",
+                        "children": [
+                            {
+                                "id": 23,
+                                "label": "濉溪县"
+                            },
+                            {
+                                "id": 24,
+                                "label": "相山区",
+                                "checked": true
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": 5,
+                "label": "河南省",
+                "children": [
+                    {
+                        "id": 6,
+                        "label": "郑州市"
+                    }
+                ]
+            },
+            {
+                "id": 10,
+                "label": "江苏省",
+                "children": [
+                    {
+                        "id": 11,
+                        "label": "苏州市"
+                    },
+                    {
+                        "id": 12,
+                        "label": "南京市",
+                        "children": [
+                            {
+                                "id": 13,
+                                "label": "姑苏区"
+                            },
+                            {
+                                "id": 14,
+                                "label": "相城区"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+        var obj={
+            elem: '.ele1',
+            data: data,
+            // url: "../eleTree/tree.json",
+            renderAfterExpand: true,
+            expandOnClickNode: true,
+            defaultCheckedKeys: [23]
+        }
+
+        var el1=eleTree.render(obj);
+    });
 </script>
 </body>
 </html>

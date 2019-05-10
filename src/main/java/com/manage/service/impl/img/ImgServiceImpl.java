@@ -67,9 +67,9 @@ public class ImgServiceImpl implements ImgService
         return imgCategoryBO;
     }
     private ImgCategoryBO findImgCategoryChildren(ImgCategoryBO imgCategoryP,List<ImgCategoryBO> imgCategorieList){
+        imgCategoryP.setChildren(new ArrayList<>());
         for (ImgCategoryBO imgCategoryC:imgCategorieList){
             if (imgCategoryP.getId() == imgCategoryC.getParentId()){
-                imgCategoryP.setChildren(new ArrayList<>());
                 imgCategoryP.getChildren().add(findImgCategoryChildren(imgCategoryC,imgCategorieList));
             }
         }

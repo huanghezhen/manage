@@ -1058,7 +1058,7 @@ layui.define(["jquery","laytpl"], function (exports) {
             var menuStr=['<ul id="tree-menu">'
                 ,$.inArray("copy",options.contextmenuList)!==-1?'<li class="copy"><a href="javascript:;">复制</a></li>':''
                 ,$.inArray("add",options.contextmenuList)!==-1?'<li class="add"><a href="javascript:;">新增</a></li>'+
-                    '<li class="insertAfter"><a href="javascript:;">在下方添加分类</a></li>'+
+                    '<li class="insertAfter"><a href="javascript:;">添加分类</a></li>'+
                     '<li class="append"><a href="javascript:;">添加子分类</a></li>' : ""
                 ,$.inArray("edit",options.contextmenuList)!==-1?'<li class="edit"><a href="javascript:;">修改</a></li>':''
                 ,$.inArray("remove",options.contextmenuList)!==-1?'<li class="remove"><a href="javascript:;">删除</a></li>':''

@@ -58,13 +58,23 @@ public class ImgServiceImpl implements ImgService
     @Override
     public Ret editImgCategory(ImgCategory imgCategory)
     {
-        return null;
+        int i = imgMapper.editImgCategory(imgCategory);
+        if (i>0){
+            return Ret.getRet();
+        }else {
+            return Ret.getRet(Const.failedEnum.EDIT_IMG_CATEGORY_ERROR.getCode(),Const.failedEnum.EDIT_IMG_CATEGORY_ERROR.getMsg());
+        }
     }
 
     @Override
     public Ret deleteImgCategory(ImgCategory imgCategory)
     {
-        return null;
+        int i = imgMapper.deleteImgCategory(imgCategory);
+        if (i>0){
+            return Ret.getRet();
+        }else {
+            return Ret.getRet(Const.failedEnum.DELETE_IMG_CATEGORY_ERROR.getCode(),Const.failedEnum.DELETE_IMG_CATEGORY_ERROR.getMsg());
+        }
     }
 
     private ImgCategoryBO getImgCategoryTree(List<ImgCategoryBO> imgCategorieList,String merchantCode){

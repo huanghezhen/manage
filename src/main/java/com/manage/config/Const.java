@@ -34,7 +34,9 @@ public class Const
         SAVE_ERROR("-11","新增失败"),
         UPDATE_ERROR("-12","修改失败"),
         ADD_IMG_CATEGORY_ERROR("-13","新增分类失败"),
-        ALL_CATEGORY_ERROR("-14","全部分类不能添加同级分类")
+        ALL_CATEGORY_ERROR("-14","全部分类不能添加同级分类"),
+        EDIT_IMG_CATEGORY_ERROR("-15","修改分类失败"),
+        DELETE_IMG_CATEGORY_ERROR("-15","修改分类失败")
         ;
 
         // 错误码

@@ -106,11 +106,26 @@
                 });
                 // 修改
                 eleTree.on("nodeEdit(data1)",function(d) {
+                    var id = d.data.id;
+                    var label = d.value;
+                    admin.req({
+                        url: pathUrl + '/imgCtrl/editImgCategory' //实际使用请改成服务端真实接口
+                        , data: {"id":id,"label":label}
+                        , done: function (res) {
 
+                        }
+                    });
                 });
                 // 删除
                 eleTree.on("nodeRemove(data1)",function(d) {
+                    var id = d.data.id;
+                    admin.req({
+                        url: pathUrl + '/imgCtrl/deleteImgCategory' //实际使用请改成服务端真实接口
+                        , data: {"id":id}
+                        , done: function (res) {
 
+                        }
+                    });
                 });
 
             }

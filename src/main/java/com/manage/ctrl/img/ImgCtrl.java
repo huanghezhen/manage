@@ -46,7 +46,7 @@ public class ImgCtrl
     }
 
     @RequestMapping(value = "/uploadImg")
-    public Ret uploadImg(String categoryId,MultipartFile file,HttpServletRequest request){
+    public Ret uploadImg(Integer categoryId,MultipartFile file,HttpServletRequest request){
         return imgService.uploadImg(categoryId,file,request);
     }
 

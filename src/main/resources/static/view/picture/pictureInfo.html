@@ -90,24 +90,7 @@
                             // 该类别下的所有类别
                             var categoryIdList = [categoryId];
                             categoryIdList = myMethod.getAllCategoryId(d.data.currentData.children,categoryIdList);
-                            // 初始化文件上传
-                            myMethod.initUpload(categoryId);
-                            // 初始化图片信息
-                            admin.req({
-                                url: pathUrl + '/imgCtrl/countImgInfo' //实际使用请改成服务端真实接口
-                                , data: {"categoryIdList":JSON.stringify(categoryIdList)}
-                                , done: function (res) {
-                                    // 初始化分页
-                                    laypage.render({
-                                        elem: 'page'
-                                        ,count: res.data
-                                        ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
-                                        ,jump: function(obj){
-                                            myMethod.initImg(categoryIdList,obj.limit,obj.curr);
-                                        }
-                                    });
-                                }
-                            });
+                            myMethod.initPage(categoryIdList);
                         });
 
                         // 添加子节点
@@ -167,15 +150,22 @@
                     url: pathUrl + '/imgCtrl/listImgInfo' //实际使用请改成服务端真实接口
                     , data: {"categoryIdList":JSON.stringify(categoryIdList),"pageSize":pageSize,"pageNum":pageNum}
                     , done: function (res) {
-                        var imgInfo = "<div class=\"layui-col-sm3\" id=\"uploadImg\" style=\"cursor:pointer;\" title=\"点击上传图片\">\n" +
-                            "<img style=\"height: 100%;width: 100%;\" src=\"../../layuiadmin/style/res/template/upload.png\">\n" +
-                            "</div>";
+                        var imgInfo = "";
+                        if (pageNum == 1){
+                            imgInfo = "<div class=\"layui-col-sm3\" id=\"uploadImg\" style=\"cursor:pointer;\" title=\"点击上传图片\">\n" +
+                                "<img style=\"height: 100%;width: 100%;\" src=\"../../layuiadmin/style/res/template/upload.png\">\n" +
+                                "</div>";
+                        }
                         for (var i = 0; i < res.data.length; i++) {
                             imgInfo += "<div class=\"layui-col-sm3\">\n" +
                                 "<img style=\"height: 100%;width: 100%;\" src=\"../../img/"+res.data[i].imgUrl+"\">\n" +
                                 "</div>";
                         }
                         $("#imgInfo").html(imgInfo);
+                        // 初始化文件上传
+                        if (pageNum == 1){
+                            myMethod.initUpload(categoryIdList[0],categoryIdList);
+                        }
                     }
                 });
             },
@@ -190,7 +180,7 @@
                 }
                 return newArr;
             },
-            initUpload:function (categoryId) {
+            initUpload:function (categoryId,categoryIdList) {
                 //初始化上传图片
                 upload.render({
                     elem: '#uploadImg'
@@ -199,7 +189,7 @@
                     ,accept: 'file' //普通文件
                     ,data: {"categoryId":categoryId}
                     ,done: function(res){
-
+                        myMethod.initPage(categoryIdList);
                     }
                 });
             },
@@ -214,6 +204,24 @@
                     contextmenuList: ['add','edit','remove']
                 };
                 tree.reload(obj);
+            },
+            initPage:function (categoryIdList) {
+                // 初始化图片信息
+                admin.req({
+                    url: pathUrl + '/imgCtrl/countImgInfo' //实际使用请改成服务端真实接口
+                    , data: {"categoryIdList":JSON.stringify(categoryIdList)}
+                    , done: function (res) {
+                        // 初始化分页
+                        laypage.render({
+                            elem: 'page'
+                            ,count: res.data
+                            ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                            ,jump: function(obj){
+                                myMethod.initImg(categoryIdList,obj.limit,obj.curr);
+                            }
+                        });
+                    }
+                });
             }
         };
 

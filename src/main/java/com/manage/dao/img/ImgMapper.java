@@ -22,4 +22,5 @@ public interface ImgMapper
     int deleteImgCategory(ImgCategory imgCategory);
     int countImgInfo(ImgInfoBO imgInfoBO);
     List<ImgInfo> listImgInfo(ImgInfoBO imgInfoBO);
+    int addImgInfo(ImgInfo imgInfo);
 }

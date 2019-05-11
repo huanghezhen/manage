@@ -20,7 +20,7 @@ public interface ImgService
     Ret addImgCategory(ImgCategoryBO imgCategory,HttpServletRequest request);
     Ret editImgCategory(ImgCategory imgCategory);
     Ret deleteImgCategory(ImgCategory imgCategory);
-    Ret uploadImg(String categoryId,MultipartFile file,HttpServletRequest request);
+    Ret uploadImg(Integer categoryId,MultipartFile file,HttpServletRequest request);
     Ret countImgInfo(String categoryIdList,HttpServletRequest request);
     Ret listImgInfo(ImgInfoBO imgInfoBO,HttpServletRequest request);
 }

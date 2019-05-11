@@ -31,4 +31,7 @@
          order by create_time desc
          limit #{pageNum},#{pageSize}
     </select>
+    <insert id="addImgInfo">
+        insert into img_info (category_id, img_url, merchant_code, user_code) values (#{categoryId},#{imgUrl},#{merchantCode},#{userCode})
+    </insert>
 </mapper>

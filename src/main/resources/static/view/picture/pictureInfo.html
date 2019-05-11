@@ -89,25 +89,28 @@
                             $("#imgSettingName").html("图片设置 -- 当前分类："+d.data.currentData.label);
                             // 展示上传图片
                             $("#uploadImg").show();
-                            // 初始化分页
-                            laypage.render({
-                                elem: '#page'
-                                ,count: 50
-                                ,layout: ['count', 'prev', 'page', 'next']
-                                ,jump: function(obj){
 
-                                }
-                            });
+                            // 点击的类别
+                            var categoryId = d.data.currentData.id;
+                            // 该类别下的所有类别
+                            var categoryIdList = [categoryId];
+                            categoryIdList = myMethod.getAllCategoryId(d.data.currentData.children,categoryIdList);
+                            // 初始化文件上传
+                            myMethod.initUpload(categoryId);
+                            // 初始化图片信息
+                            admin.req({
+                                url: pathUrl + '/imgCtrl/countImgInfo' //实际使用请改成服务端真实接口
+                                , data: {"categoryIdList":JSON.stringify(categoryIdList)}
+                                , done: function (res) {
+                                    // 初始化分页
+                                    laypage.render({
+                                        elem: 'page'
+                                        ,count: res.data
+                                        ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                                        ,jump: function(obj){
 
-                            //初始化上传图片
-                            upload.render({
-                                elem: '#uploadImg'
-                                ,url: pathUrl+'/imgCtrl/uploadImg'
-                                ,multiple: true
-                                ,accept: 'file' //普通文件
-                                ,data: {"categoryId":d.data.currentData.id}
-                                ,done: function(res){
-
+                                        }
+                                    });
                                 }
                             });
                         });
@@ -164,8 +167,38 @@
                     }
                 });
             },
-            initImg:function (categoryId,page) {
+            initImg:function (categoryId,pageSize,pageNum) {
+                admin.req({
+                    url: pathUrl + '/imgCtrl/editImgCategory' //实际使用请改成服务端真实接口
+                    , data: {"categoryId":categoryId,"page":page,"pageNum":pageNum}
+                    , done: function (res) {
 
+                    }
+                });
+            },
+            getAllCategoryId:function (arr,newArr) {
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i].children.length === 0) {
+                        newArr.push(arr[i].id);
+                    } else {
+                        newArr.push(arr[i].id);
+                        newArr = myMethod.getAllCategoryId(arr[i].children, newArr);
+                    }
+                }
+                return newArr;
+            },
+            initUpload:function (categoryId) {
+                //初始化上传图片
+                upload.render({
+                    elem: '#uploadImg'
+                    ,url: pathUrl+'/imgCtrl/uploadImg'
+                    ,multiple: true
+                    ,accept: 'file' //普通文件
+                    ,data: {"categoryId":categoryId}
+                    ,done: function(res){
+
+                    }
+                });
             }
         };
 

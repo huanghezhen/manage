@@ -1,5 +1,6 @@
 package com.manage.service.impl.img;
 
+import com.alibaba.fastjson.JSONArray;
 import com.manage.config.Const;
 import com.manage.dao.img.ImgMapper;
 import com.manage.entity.Ret;
@@ -83,6 +84,14 @@ public class ImgServiceImpl implements ImgService
     {
         System.out.println(1);
         return Ret.getRet();
+    }
+
+    @Override
+    public Ret countImgInfo(String categoryIdList, HttpServletRequest request)
+    {
+        JSONArray jsonArray = JSONArray.parseArray(categoryIdList);
+        System.out.println(categoryIdList);
+        return Ret.getRetT(100);
     }
 
     private ImgCategoryBO getImgCategoryTree(List<ImgCategoryBO> imgCategorieList,String merchantCode){

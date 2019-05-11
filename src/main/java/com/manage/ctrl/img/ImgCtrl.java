@@ -48,4 +48,9 @@ public class ImgCtrl
     public Ret uploadImg(String categoryId,MultipartFile file,HttpServletRequest request){
         return imgService.uploadImg(categoryId,file,request);
     }
+
+    @RequestMapping(value = "/countImgInfo")
+    public Ret countImgInfo(String categoryIdList,HttpServletRequest request){
+        return imgService.countImgInfo(categoryIdList,request);
+    }
 }

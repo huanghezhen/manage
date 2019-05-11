@@ -9,6 +9,7 @@ import com.manage.entity.table.ImgCategory;
 import com.manage.entity.table.ImgInfo;
 import com.manage.entity.table.User;
 import com.manage.service.iface.img.ImgService;
+import com.manage.util.ImgUtil;
 import com.manage.util.SequenceGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -189,6 +190,10 @@ public class ImgServiceImpl implements ImgService
         String path = realPath + fileName;
         // 转存文件到指定的路径
         file.transferTo(new File(path));
+        int angel = ImgUtil.getRotateAngleForPhoto(path);
+        if (angel<360 && angel>0) {
+            ImgUtil.rotateImage(new File(path), angel);
+        }
         return fileName;
     }
 }

@@ -41,7 +41,7 @@ public class ImgServiceImpl implements ImgService
     }
 
     @Override
-    public Ret addImgCategory(ImgCategoryBO imgCategory)
+    public Ret addImgCategory(ImgCategoryBO imgCategory,HttpServletRequest request)
     {
         if (1 == imgCategory.getAddType()){
             if (0 == imgCategory.getParentId()){
@@ -51,7 +51,7 @@ public class ImgServiceImpl implements ImgService
         }
         int i = imgMapper.addImgCategory(imgCategory);
         if (i>0){
-            return Ret.getRet();
+            return getImgCategory(request);
         }else {
             return Ret.getRet(Const.failedEnum.ADD_IMG_CATEGORY_ERROR.getCode(),Const.failedEnum.ADD_IMG_CATEGORY_ERROR.getMsg());
         }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.manage.dao.img.ImgMapper" >
     <select id="listImgCategory" resultType="com.manage.entity.img.ImgCategoryBO">
-        select id, parent_id, name label, merchant_code, create_time from img_category where merchant_code = #{merchantCode} order by id
+        select id, parent_id, name label, merchant_code, create_time from img_category where merchant_code = #{merchantCode} order by id desc
     </select>
 
     <insert id="addImgCategory">

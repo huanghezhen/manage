@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface ImgService
 {
     Ret getImgCategory(HttpServletRequest request);
-    Ret addImgCategory(ImgCategoryBO imgCategory);
+    Ret addImgCategory(ImgCategoryBO imgCategory,HttpServletRequest request);
     Ret editImgCategory(ImgCategory imgCategory);
     Ret deleteImgCategory(ImgCategory imgCategory);
     Ret uploadImg(String categoryId,MultipartFile file,HttpServletRequest request);

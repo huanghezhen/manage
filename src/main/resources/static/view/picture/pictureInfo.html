@@ -41,9 +41,7 @@
                     <div id="page"></div>
                     <div id="imgSettingBody">
                         <div class="layui-row layui-col-space10" id="imgInfo">
-                            <div class="layui-col-sm3" id="uploadImg" style="cursor:pointer;display:none;" title="点击上传图片">
-                                <img style="height: 100%;width: 100%;" src="../../layuiadmin/style/res/template/upload.png">
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -73,7 +71,7 @@
                     ,data: {}
                     ,done: function(res){
                         var merchantCode = res.data[0].merchantCode;
-                        eleTree.render({
+                        var tree = eleTree.render({
                             elem: '.ele1',
                             data: res.data,
                             renderAfterExpand: true,
@@ -87,9 +85,6 @@
 
                         eleTree.on("nodeClick(data1)",function(d) {
                             $("#imgSettingName").html("图片设置 -- 当前分类："+d.data.currentData.label);
-                            // 展示上传图片
-                            $("#uploadImg").show();
-
                             // 点击的类别
                             var categoryId = d.data.currentData.id;
                             // 该类别下的所有类别
@@ -108,7 +103,6 @@
                                         ,count: res.data
                                         ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
                                         ,jump: function(obj){
-                                            console.log(obj);
                                             myMethod.initImg(categoryIdList,obj.limit,obj.curr);
                                         }
                                     });
@@ -124,7 +118,7 @@
                                 url: pathUrl + '/imgCtrl/addImgCategory' //实际使用请改成服务端真实接口
                                 , data: {"parentId":p,"label":label,"merchantCode":merchantCode}
                                 , done: function (res) {
-
+                                    myMethod.reloadNode(res,tree,p);
                                 }
                             });
                         });
@@ -137,7 +131,7 @@
                                 url: pathUrl + '/imgCtrl/addImgCategory' //实际使用请改成服务端真实接口
                                 , data: {"parentId":p,"label":label,"merchantCode":merchantCode,"addType":1}
                                 , done: function (res) {
-
+                                    myMethod.reloadNode(res,tree,p);
                                 }
                             });
                         });
@@ -173,13 +167,15 @@
                     url: pathUrl + '/imgCtrl/listImgInfo' //实际使用请改成服务端真实接口
                     , data: {"categoryIdList":JSON.stringify(categoryIdList),"pageSize":pageSize,"pageNum":pageNum}
                     , done: function (res) {
-                        var imgInfo = "";
+                        var imgInfo = "<div class=\"layui-col-sm3\" id=\"uploadImg\" style=\"cursor:pointer;\" title=\"点击上传图片\">\n" +
+                            "<img style=\"height: 100%;width: 100%;\" src=\"../../layuiadmin/style/res/template/upload.png\">\n" +
+                            "</div>";
                         for (var i = 0; i < res.data.length; i++) {
                             imgInfo += "<div class=\"layui-col-sm3\">\n" +
-                                "<img style=\"height: 100%;width: 100%;\" src=\"../../layuiadmin/style/res/template/portrait.png\">\n" +
+                                "<img style=\"height: 100%;width: 100%;\" src=\"../../img/"+res.data[i].imgUrl+"\">\n" +
                                 "</div>";
                         }
-                        $("#imgInfo").append(imgInfo);
+                        $("#imgInfo").html(imgInfo);
                     }
                 });
             },
@@ -206,6 +202,18 @@
 
                     }
                 });
+            },
+            reloadNode:function (res,tree,id) {
+                var obj = {
+                    elem: '.ele1',
+                    data: res.data,
+                    renderAfterExpand: true,
+                    expandOnClickNode: false,
+                    draggable: true,
+                    defaultExpandedKeys: [0,id],
+                    contextmenuList: ['add','edit','remove']
+                };
+                tree.reload(obj);
             }
         };
 

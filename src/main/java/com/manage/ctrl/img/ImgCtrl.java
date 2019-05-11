@@ -31,8 +31,8 @@ public class ImgCtrl
     }
 
     @RequestMapping(value = "/addImgCategory",method = RequestMethod.GET)
-    public Ret addImgCategory(ImgCategoryBO imgCategory){
-        return imgService.addImgCategory(imgCategory);
+    public Ret addImgCategory(ImgCategoryBO imgCategory,HttpServletRequest request){
+        return imgService.addImgCategory(imgCategory,request);
     }
 
     @RequestMapping(value = "/editImgCategory",method = RequestMethod.GET)

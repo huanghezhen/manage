@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,5 +42,10 @@ public class ImgCtrl
     @RequestMapping(value = "/deleteImgCategory",method = RequestMethod.GET)
     public Ret deleteImgCategory(ImgCategory imgCategory){
         return imgService.deleteImgCategory(imgCategory);
+    }
+
+    @RequestMapping(value = "/uploadImg")
+    public Ret uploadImg(String categoryId,MultipartFile file,HttpServletRequest request){
+        return imgService.uploadImg(categoryId,file,request);
     }
 }

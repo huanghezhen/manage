@@ -9,6 +9,7 @@ import com.manage.entity.table.User;
 import com.manage.service.iface.img.ImgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -75,6 +76,13 @@ public class ImgServiceImpl implements ImgService
         }else {
             return Ret.getRet(Const.failedEnum.DELETE_IMG_CATEGORY_ERROR.getCode(),Const.failedEnum.DELETE_IMG_CATEGORY_ERROR.getMsg());
         }
+    }
+
+    @Override
+    public Ret uploadImg(String categoryId,MultipartFile file, HttpServletRequest request)
+    {
+        System.out.println(1);
+        return Ret.getRet();
     }
 
     private ImgCategoryBO getImgCategoryTree(List<ImgCategoryBO> imgCategorieList,String merchantCode){

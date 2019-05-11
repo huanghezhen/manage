@@ -21,7 +21,7 @@
 
 <div class="layui-fluid">
     <div class="layui-row layui-col-space10">
-        <div class="layui-col-sm2">
+        <div class="layui-col-sm3">
             <!-- 填充内容 -->
             <div class="layui-card">
                 <div class="layui-card-header">分类设置</div>
@@ -32,28 +32,17 @@
                 </div>
             </div>
         </div>
-        <div class="layui-col-sm10">
+        <div class="layui-col-sm9">
             <div class="layui-card">
-                <div class="layui-card-header" id="imgSettingName">图片设置 -- 当前分类：无</div>
+                <div class="layui-card-header">
+                    <div id="imgSettingName">图片设置 -- 当前分类：无</div>
+                </div>
                 <div class="layui-card-body">
+                    <div id="page"></div>
                     <div id="imgSettingBody">
                         <div class="layui-row layui-col-space10">
-                            <div class="layui-col-sm4">
-                                <img src="../../layuiadmin/style/res/template/portrait.png">
-                            </div>
-                            <div class="layui-col-sm4">
-                                <img src="../../layuiadmin/style/res/template/portrait.png">
-                            </div>
-                            <div class="layui-col-sm4">
-                                <img src="../../layuiadmin/style/res/template/portrait.png">
-                            </div>
-
-                            <div class="layui-col-sm4">
-                                <img src="../../layuiadmin/style/res/template/portrait.png">
-                            </div>
-
-                            <div class="layui-col-sm4">
-                                <img src="../../layuiadmin/style/res/template/portrait.png">
+                            <div class="layui-col-sm3" id="uploadImg" style="cursor:pointer;display:none;" title="点击上传图片">
+                                <img style="height: 100%;width: 100%;" src="../../layuiadmin/style/res/template/timg.jpg">
                             </div>
                         </div>
                     </div>
@@ -70,85 +59,117 @@
     }).extend({
         index: 'lib/index', //主入口模块
         eleTree: 'lib/eleTree'
-    }).use(['index','eleTree'],function () {
+    }).use(['index','eleTree','laypage','upload'],function () {
         var $ = layui.jquery;
         var eleTree = layui.eleTree;
         var pathUrl = layui.setter.pathUrl;
         var admin = layui.admin;
-        admin.req({
-            url: pathUrl+'/imgCtrl/getImgCategory' //实际使用请改成服务端真实接口
-            ,data: {}
-            ,done: function(res){
-                var merchantCode = res.data[0].merchantCode;
-                var obj={
-                    elem: '.ele1',
-                    data: res.data,
-                    renderAfterExpand: true,
-                    expandOnClickNode: false,
-                    highlightCurrent: true,
-                    draggable: true,
-                    contextmenuList: ['add','edit','remove']
-                }
+        var laypage = layui.laypage;
+        var upload = layui.upload;
+        var myMethod = {
+            init:function () {
+                admin.req({
+                    url: pathUrl+'/imgCtrl/getImgCategory' //实际使用请改成服务端真实接口
+                    ,data: {}
+                    ,done: function(res){
+                        var merchantCode = res.data[0].merchantCode;
+                        eleTree.render({
+                            elem: '.ele1',
+                            data: res.data,
+                            renderAfterExpand: true,
+                            expandOnClickNode: false,
+                            highlightCurrent: true,
+                            draggable: true,
+                            defaultExpandedKeys: [0],
+                            contextmenuList: ['add','edit','remove']
+                        });
 
-                var el1=eleTree.render(obj);
 
+                        eleTree.on("nodeClick(data1)",function(d) {
+                            $("#imgSettingName").html("图片设置 -- 当前分类："+d.data.currentData.label);
+                            // 展示上传图片
+                            $("#uploadImg").show();
+                            // 初始化分页
+                            laypage.render({
+                                elem: '#page'
+                                ,count: 50
+                                ,layout: ['count', 'prev', 'page', 'next']
+                                ,jump: function(obj){
 
-                eleTree.on("nodeClick(data1)",function(d) {
-                    $("#imgSettingName").html("图片设置 -- 当前分类："+d.data.currentData.label);
+                                }
+                            });
 
+                            //初始化上传图片
+                            upload.render({
+                                elem: '#uploadImg'
+                                ,url: pathUrl+'/imgCtrl/uploadImg'
+                                ,multiple: true
+                                ,accept: 'file' //普通文件
+                                ,data: {"categoryId":d.data.currentData.id}
+                                ,done: function(res){
+
+                                }
+                            });
+                        });
+
+                        // 添加子节点
+                        eleTree.on("nodeAppend(data1)",function(e) {
+                            var p = e.data.id;
+                            var label = e.newData.label;
+                            admin.req({
+                                url: pathUrl + '/imgCtrl/addImgCategory' //实际使用请改成服务端真实接口
+                                , data: {"parentId":p,"label":label,"merchantCode":merchantCode}
+                                , done: function (res) {
+
+                                }
+                            });
+                        });
+
+                        // 添加节点之后
+                        eleTree.on("nodeInsertAfter(data1)",function(d) {
+                            var p = d.data.id;
+                            var label = d.newData.label;
+                            admin.req({
+                                url: pathUrl + '/imgCtrl/addImgCategory' //实际使用请改成服务端真实接口
+                                , data: {"parentId":p,"label":label,"merchantCode":merchantCode,"addType":1}
+                                , done: function (res) {
+
+                                }
+                            });
+                        });
+                        // 修改
+                        eleTree.on("nodeEdit(data1)",function(d) {
+                            var id = d.data.id;
+                            var label = d.value;
+                            admin.req({
+                                url: pathUrl + '/imgCtrl/editImgCategory' //实际使用请改成服务端真实接口
+                                , data: {"id":id,"label":label}
+                                , done: function (res) {
+
+                                }
+                            });
+                        });
+                        // 删除
+                        eleTree.on("nodeRemove(data1)",function(d) {
+                            var id = d.data.id;
+                            admin.req({
+                                url: pathUrl + '/imgCtrl/deleteImgCategory' //实际使用请改成服务端真实接口
+                                , data: {"id":id}
+                                , done: function (res) {
+
+                                }
+                            });
+                        });
+
+                    }
                 });
-
-                // 添加子节点
-                eleTree.on("nodeAppend(data1)",function(e) {
-                    var p = e.data.id;
-                    var label = e.newData.label;
-                    admin.req({
-                        url: pathUrl + '/imgCtrl/addImgCategory' //实际使用请改成服务端真实接口
-                        , data: {"parentId":p,"label":label,"merchantCode":merchantCode}
-                        , done: function (res) {
-
-                        }
-                    });
-                });
-
-                // 添加节点之后
-                eleTree.on("nodeInsertAfter(data1)",function(d) {
-                    var p = d.data.id;
-                    var label = d.newData.label;
-                    admin.req({
-                        url: pathUrl + '/imgCtrl/addImgCategory' //实际使用请改成服务端真实接口
-                        , data: {"parentId":p,"label":label,"merchantCode":merchantCode,"addType":1}
-                        , done: function (res) {
-
-                        }
-                    });
-                });
-                // 修改
-                eleTree.on("nodeEdit(data1)",function(d) {
-                    var id = d.data.id;
-                    var label = d.value;
-                    admin.req({
-                        url: pathUrl + '/imgCtrl/editImgCategory' //实际使用请改成服务端真实接口
-                        , data: {"id":id,"label":label}
-                        , done: function (res) {
-
-                        }
-                    });
-                });
-                // 删除
-                eleTree.on("nodeRemove(data1)",function(d) {
-                    var id = d.data.id;
-                    admin.req({
-                        url: pathUrl + '/imgCtrl/deleteImgCategory' //实际使用请改成服务端真实接口
-                        , data: {"id":id}
-                        , done: function (res) {
-
-                        }
-                    });
-                });
+            },
+            initImg:function (categoryId,page) {
 
             }
-        });
+        };
+
+        myMethod.init();
     });
 </script>
 </body>

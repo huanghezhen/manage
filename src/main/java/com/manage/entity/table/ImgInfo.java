@@ -1,4 +1,4 @@
-package com.manage.entity.user;
+package com.manage.entity.table;
 
 import java.util.Date;
 

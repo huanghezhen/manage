@@ -170,7 +170,7 @@
             initImg:function (categoryId,pageSize,pageNum) {
                 admin.req({
                     url: pathUrl + '/imgCtrl/editImgCategory' //实际使用请改成服务端真实接口
-                    , data: {"categoryId":categoryId,"page":page,"pageNum":pageNum}
+                    , data: {"categoryId":categoryId,"pageSize":pageSize,"pageNum":pageNum}
                     , done: function (res) {
 
                     }

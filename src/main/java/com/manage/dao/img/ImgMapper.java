@@ -18,4 +18,5 @@ public interface ImgMapper
     int addImgCategory(ImgCategory imgCategory);
     int editImgCategory(ImgCategory imgCategory);
     int deleteImgCategory(ImgCategory imgCategory);
+    int countImgInfo(ImgCategory imgCategory);
 }

@@ -90,7 +90,8 @@ public class ImgServiceImpl implements ImgService
     public Ret countImgInfo(String categoryIdList, HttpServletRequest request)
     {
         JSONArray jsonArray = JSONArray.parseArray(categoryIdList);
-        System.out.println(categoryIdList);
+        categoryIdList = categoryIdList.substring(1,categoryIdList.length()-1);
+
         return Ret.getRetT(100);
     }
 

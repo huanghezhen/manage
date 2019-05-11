@@ -20,4 +20,15 @@
     <select id="getParentId" resultType="int">
         select parent_id from img_category where id = #{id}
     </select>
+
+    <select id="countImgInfo" resultType="int">
+        select count(*) from img_info where merchant_code = #{merchantCode} and find_in_set(category_id,#{categoryIdList})
+    </select>
+
+    <select id="listImgInfo" resultType="com.manage.entity.table.ImgInfo">
+        select img_code, category_id, img_url, merchant_code, user_code, create_time
+         from img_info where merchant_code = #{merchantCode} and find_in_set(category_id,#{categoryIdList})
+         order by create_time desc
+         limit #{pageNum},#{pageSize}
+    </select>
 </mapper>

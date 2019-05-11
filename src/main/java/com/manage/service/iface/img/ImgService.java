@@ -2,6 +2,7 @@ package com.manage.service.iface.img;
 
 import com.manage.entity.Ret;
 import com.manage.entity.img.ImgCategoryBO;
+import com.manage.entity.img.ImgInfoBO;
 import com.manage.entity.table.ImgCategory;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,4 +22,5 @@ public interface ImgService
     Ret deleteImgCategory(ImgCategory imgCategory);
     Ret uploadImg(String categoryId,MultipartFile file,HttpServletRequest request);
     Ret countImgInfo(String categoryIdList,HttpServletRequest request);
+    Ret listImgInfo(ImgInfoBO imgInfoBO,HttpServletRequest request);
 }

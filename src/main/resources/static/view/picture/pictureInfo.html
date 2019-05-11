@@ -40,9 +40,9 @@
                 <div class="layui-card-body">
                     <div id="page"></div>
                     <div id="imgSettingBody">
-                        <div class="layui-row layui-col-space10">
+                        <div class="layui-row layui-col-space10" id="imgInfo">
                             <div class="layui-col-sm3" id="uploadImg" style="cursor:pointer;display:none;" title="点击上传图片">
-                                <img style="height: 100%;width: 100%;" src="../../layuiadmin/style/res/template/timg.jpg">
+                                <img style="height: 100%;width: 100%;" src="../../layuiadmin/style/res/template/upload.png">
                             </div>
                         </div>
                     </div>
@@ -108,7 +108,8 @@
                                         ,count: res.data
                                         ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
                                         ,jump: function(obj){
-
+                                            console.log(obj);
+                                            myMethod.initImg(categoryIdList,obj.limit,obj.curr);
                                         }
                                     });
                                 }
@@ -167,12 +168,18 @@
                     }
                 });
             },
-            initImg:function (categoryId,pageSize,pageNum) {
+            initImg:function (categoryIdList,pageSize,pageNum) {
                 admin.req({
-                    url: pathUrl + '/imgCtrl/editImgCategory' //实际使用请改成服务端真实接口
-                    , data: {"categoryId":categoryId,"pageSize":pageSize,"pageNum":pageNum}
+                    url: pathUrl + '/imgCtrl/listImgInfo' //实际使用请改成服务端真实接口
+                    , data: {"categoryIdList":JSON.stringify(categoryIdList),"pageSize":pageSize,"pageNum":pageNum}
                     , done: function (res) {
-
+                        var imgInfo = "";
+                        for (var i = 0; i < res.data.length; i++) {
+                            imgInfo += "<div class=\"layui-col-sm3\">\n" +
+                                "<img style=\"height: 100%;width: 100%;\" src=\"../../layuiadmin/style/res/template/portrait.png\">\n" +
+                                "</div>";
+                        }
+                        $("#imgInfo").append(imgInfo);
                     }
                 });
             },

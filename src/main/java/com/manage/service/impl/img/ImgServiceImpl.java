@@ -1,10 +1,10 @@
 package com.manage.service.impl.img;
 
-import com.alibaba.fastjson.JSONArray;
 import com.manage.config.Const;
 import com.manage.dao.img.ImgMapper;
 import com.manage.entity.Ret;
 import com.manage.entity.img.ImgCategoryBO;
+import com.manage.entity.img.ImgInfoBO;
 import com.manage.entity.table.ImgCategory;
 import com.manage.entity.table.User;
 import com.manage.service.iface.img.ImgService;
@@ -89,10 +89,22 @@ public class ImgServiceImpl implements ImgService
     @Override
     public Ret countImgInfo(String categoryIdList, HttpServletRequest request)
     {
-        JSONArray jsonArray = JSONArray.parseArray(categoryIdList);
         categoryIdList = categoryIdList.substring(1,categoryIdList.length()-1);
+        ImgInfoBO imgInfoBO = new ImgInfoBO();
+        imgInfoBO.setCategoryIdList(categoryIdList);
+        User user = (User) request.getSession().getAttribute(Const.SESSION_USER);
+        imgInfoBO.setMerchantCode(user.getMerchantCode());
+        return Ret.getRetT(imgMapper.countImgInfo(imgInfoBO));
+    }
 
-        return Ret.getRetT(100);
+    @Override
+    public Ret listImgInfo(ImgInfoBO imgInfoBO, HttpServletRequest request)
+    {
+        imgInfoBO.setCategoryIdList(imgInfoBO.getCategoryIdList().substring(1,imgInfoBO.getCategoryIdList().length()-1));
+        User user = (User) request.getSession().getAttribute(Const.SESSION_USER);
+        imgInfoBO.setMerchantCode(user.getMerchantCode());
+        imgInfoBO.setPageNum((imgInfoBO.getPageNum()-1)*imgInfoBO.getPageSize());
+        return Ret.getRetT(imgMapper.listImgInfo(imgInfoBO));
     }
 
     private ImgCategoryBO getImgCategoryTree(List<ImgCategoryBO> imgCategorieList,String merchantCode){

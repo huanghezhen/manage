@@ -52,4 +52,20 @@ public class ImgInfoBO
     {
         this.merchantCode = merchantCode;
     }
+
+    @Override
+    public String toString()
+    {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"categoryIdList\":\"")
+                .append(categoryIdList).append('\"');
+        sb.append(",\"pageSize\":")
+                .append(pageSize);
+        sb.append(",\"pageNum\":")
+                .append(pageNum);
+        sb.append(",\"merchantCode\":\"")
+                .append(merchantCode).append('\"');
+        sb.append('}');
+        return sb.toString();
+    }
 }

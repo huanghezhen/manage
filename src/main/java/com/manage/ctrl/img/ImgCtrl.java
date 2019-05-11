@@ -2,6 +2,7 @@ package com.manage.ctrl.img;
 
 import com.manage.entity.Ret;
 import com.manage.entity.img.ImgCategoryBO;
+import com.manage.entity.img.ImgInfoBO;
 import com.manage.entity.table.ImgCategory;
 import com.manage.service.iface.img.ImgService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,10 @@ public class ImgCtrl
     @RequestMapping(value = "/countImgInfo")
     public Ret countImgInfo(String categoryIdList,HttpServletRequest request){
         return imgService.countImgInfo(categoryIdList,request);
+    }
+
+    @RequestMapping(value = "/listImgInfo")
+    public Ret listImgInfo(ImgInfoBO imgInfoBO,HttpServletRequest request){
+        return imgService.listImgInfo(imgInfoBO,request);
     }
 }

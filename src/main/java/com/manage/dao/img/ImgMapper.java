@@ -1,7 +1,9 @@
 package com.manage.dao.img;
 
 import com.manage.entity.img.ImgCategoryBO;
+import com.manage.entity.img.ImgInfoBO;
 import com.manage.entity.table.ImgCategory;
+import com.manage.entity.table.ImgInfo;
 
 import java.util.List;
 
@@ -18,5 +20,6 @@ public interface ImgMapper
     int addImgCategory(ImgCategory imgCategory);
     int editImgCategory(ImgCategory imgCategory);
     int deleteImgCategory(ImgCategory imgCategory);
-    int countImgInfo(ImgCategory imgCategory);
+    int countImgInfo(ImgInfoBO imgInfoBO);
+    List<ImgInfo> listImgInfo(ImgInfoBO imgInfoBO);
 }

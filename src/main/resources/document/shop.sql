@@ -47,3 +47,13 @@ CREATE TABLE `user` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`user_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
+
+CREATE TABLE `img_info` (
+  `img_code` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `category_id` int(11) DEFAULT NULL COMMENT '所属分类',
+  `img_url` varchar(255) DEFAULT NULL COMMENT '图片地址',
+  `merchant_code` varchar(255) DEFAULT NULL COMMENT '商户编码',
+  `user_code` varchar(255) DEFAULT NULL COMMENT '用户编码',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
+  PRIMARY KEY (`img_code`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;

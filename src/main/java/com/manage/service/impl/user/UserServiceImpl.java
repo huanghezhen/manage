@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService
         int width = 44, height = 18;
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics g = image.getGraphics();
-        logger.info("Graphics:"+g.toString());
+        logger.info("Graphics:"+g);
         Random random = new Random();
         g.setColor(getRandColor(200, 250));
         g.fillRect(0, 0, width, height);

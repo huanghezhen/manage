@@ -4,7 +4,6 @@ import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifIFD0Directory;
-import com.sun.image.codec.jpeg.ImageFormatException;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGEncodeParam;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
@@ -170,12 +169,7 @@ public class ImgUtil
             jep.setQuality(per, true);
             encoder.encode(newImg, jep);
             newimage.close();
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch blocke.printStackTrace();
-        } catch (ImageFormatException e) {
-            // TODO Auto-generated catch blocke.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch blocke.printStackTrace();
+        } catch (Exception e) {
         }
     }
 

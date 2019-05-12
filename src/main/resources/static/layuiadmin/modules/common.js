@@ -22,7 +22,7 @@ layui.define(function(exports){
   admin.events.logout = function(){
     //执行退出接口
     admin.req({
-      url: layui.setter.pathUrl + '/userCtrl/logout'
+      url:'/userCtrl/logout'
       ,type: 'get'
       ,data: {}
       ,done: function(res){

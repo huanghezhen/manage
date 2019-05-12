@@ -60,14 +60,13 @@
     }).use(['index','eleTree','laypage','upload'],function () {
         var $ = layui.jquery;
         var eleTree = layui.eleTree;
-        var pathUrl = layui.setter.pathUrl;
         var admin = layui.admin;
         var laypage = layui.laypage;
         var upload = layui.upload;
         var myMethod = {
             init:function () {
                 admin.req({
-                    url: pathUrl+'/imgCtrl/getImgCategory' //实际使用请改成服务端真实接口
+                    url: '/imgCtrl/getImgCategory' //实际使用请改成服务端真实接口
                     ,data: {}
                     ,done: function(res){
                         var merchantCode = res.data[0].merchantCode;
@@ -98,7 +97,7 @@
                             var p = e.data.id;
                             var label = e.newData.label;
                             admin.req({
-                                url: pathUrl + '/imgCtrl/addImgCategory' //实际使用请改成服务端真实接口
+                                url: '/imgCtrl/addImgCategory' //实际使用请改成服务端真实接口
                                 , data: {"parentId":p,"label":label,"merchantCode":merchantCode}
                                 , done: function (res) {
                                     myMethod.reloadNode(res,tree,p);
@@ -111,7 +110,7 @@
                             var p = d.data.id;
                             var label = d.newData.label;
                             admin.req({
-                                url: pathUrl + '/imgCtrl/addImgCategory' //实际使用请改成服务端真实接口
+                                url: '/imgCtrl/addImgCategory' //实际使用请改成服务端真实接口
                                 , data: {"parentId":p,"label":label,"merchantCode":merchantCode,"addType":1}
                                 , done: function (res) {
                                     myMethod.reloadNode(res,tree,p);
@@ -123,7 +122,7 @@
                             var id = d.data.id;
                             var label = d.value;
                             admin.req({
-                                url: pathUrl + '/imgCtrl/editImgCategory' //实际使用请改成服务端真实接口
+                                url: '/imgCtrl/editImgCategory'
                                 , data: {"id":id,"label":label}
                                 , done: function (res) {
 
@@ -134,7 +133,7 @@
                         eleTree.on("nodeRemove(data1)",function(d) {
                             var id = d.data.id;
                             admin.req({
-                                url: pathUrl + '/imgCtrl/deleteImgCategory' //实际使用请改成服务端真实接口
+                                url: '/imgCtrl/deleteImgCategory' //实际使用请改成服务端真实接口
                                 , data: {"id":id}
                                 , done: function (res) {
 
@@ -147,7 +146,7 @@
             },
             initImg:function (categoryIdList,pageSize,pageNum) {
                 admin.req({
-                    url: pathUrl + '/imgCtrl/listImgInfo' //实际使用请改成服务端真实接口
+                    url: '/imgCtrl/listImgInfo' //实际使用请改成服务端真实接口
                     , data: {"categoryIdList":JSON.stringify(categoryIdList),"pageSize":pageSize,"pageNum":pageNum}
                     , done: function (res) {
                         var imgInfo = "";
@@ -184,7 +183,7 @@
                 //初始化上传图片
                 upload.render({
                     elem: '#uploadImg'
-                    ,url: pathUrl+'/imgCtrl/uploadImg'
+                    ,url: '/imgCtrl/uploadImg'
                     ,multiple: true
                     ,accept: 'file' //普通文件
                     ,data: {"categoryId":categoryId}
@@ -208,7 +207,7 @@
             initPage:function (categoryIdList) {
                 // 初始化图片信息
                 admin.req({
-                    url: pathUrl + '/imgCtrl/countImgInfo' //实际使用请改成服务端真实接口
+                    url: '/imgCtrl/countImgInfo' //实际使用请改成服务端真实接口
                     , data: {"categoryIdList":JSON.stringify(categoryIdList)}
                     , done: function (res) {
                         // 初始化分页

@@ -88,7 +88,6 @@
                 <cite>图片管理</cite>
               </a>
               <dl class="layui-nav-child">
-                <dd data-name="picture"><a lay-href="picture/catalog.html">设置图片分类</a></dd>
                 <dd data-name="picture"><a lay-href="picture/pictureInfo.html">添加图片信息</a></dd>
               </dl>
             </li>
@@ -197,11 +196,10 @@
     index: 'lib/index' //主入口模块
   }).use('index', function(){
     var $ = layui.$
-            ,admin = layui.admin
-            ,pathUrl = layui.setter.pathUrl;
+            ,admin = layui.admin;
     //请求登入接口
     admin.req({
-      url: pathUrl+'/userCtrl/home' //实际使用请改成服务端真实接口
+      url: '/userCtrl/home' //实际使用请改成服务端真实接口
       ,data: {}
       ,done: function(res){
           $("#userName").html(res.data.userName);

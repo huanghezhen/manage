@@ -38,7 +38,7 @@
             </div>
             <div class="layui-col-xs5">
               <div style="margin-left: 10px;" id="code">
-
+                <img src="/userCtrl/getCode" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode">
               </div>
             </div>
           </div>
@@ -72,13 +72,12 @@
     ,search = router.search;
 
     form.render();
-    $("#code").html("<img src=\""+setter.pathUrl+"/userCtrl/getCode\" class=\"layadmin-user-login-codeimg\" id=\"LAY-user-get-vercode\">")
     //提交
     form.on('submit(LAY-user-login-submit)', function(obj){
     
       //请求登入接口
       admin.req({
-        url: setter.pathUrl+'/userCtrl/login' //实际使用请改成服务端真实接口
+        url: '/userCtrl/login' //实际使用请改成服务端真实接口
         ,data: obj.field
         ,done: function(res){
           layer.msg('登入成功', {

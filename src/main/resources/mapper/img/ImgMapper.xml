@@ -2,19 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.manage.dao.img.ImgMapper" >
     <select id="listImgCategory" resultType="com.manage.entity.img.ImgCategoryBO">
-        select id, parent_id, name, merchant_code, create_time from img_category where merchant_code = #{merchantCode} order by id
+        select id, parent_id, name label, merchant_code, create_time from img_category where merchant_code = #{merchantCode} order by id desc
     </select>
 
     <insert id="addImgCategory">
         insert into img_category (parent_id, name, merchant_code)
-         values (#{parentId},#{name},#{merchantCode})
+         values (#{parentId},#{label},#{merchantCode})
     </insert>
 
     <update id="editImgCategory">
-        update img_category set name = #{name} where id = #{id}
+        update img_category set name = #{label} where id = #{id}
     </update>
 
     <delete id="deleteImgCategory">
         delete from img_category where id = #{id}
     </delete>
+    <select id="getParentId" resultType="int">
+        select parent_id from img_category where id = #{id}
+    </select>
+
+    <select id="countImgInfo" resultType="int">
+        select count(*) from img_info where merchant_code = #{merchantCode} and find_in_set(category_id,#{categoryIdList})
+    </select>
+
+    <select id="listImgInfo" resultType="com.manage.entity.table.ImgInfo">
+        select img_code, category_id, img_url, merchant_code, user_code, create_time
+         from img_info where merchant_code = #{merchantCode} and find_in_set(category_id,#{categoryIdList})
+         order by create_time desc
+         limit #{pageNum},#{pageSize}
+    </select>
+    <insert id="addImgInfo">
+        insert into img_info (category_id, img_url, merchant_code, user_code) values (#{categoryId},#{imgUrl},#{merchantCode},#{userCode})
+    </insert>
 </mapper>

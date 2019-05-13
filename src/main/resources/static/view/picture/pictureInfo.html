@@ -20,8 +20,8 @@
 </style>
 
 <div class="layui-fluid">
-    <div class="layui-row layui-col-space10 demo-list">
-        <div class="layui-col-sm2">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-sm3">
             <!-- 填充内容 -->
             <div class="layui-card">
                 <div class="layui-card-header">分类设置</div>
@@ -32,12 +32,17 @@
                 </div>
             </div>
         </div>
-        <div class="layui-col-sm10">
+        <div class="layui-col-sm9">
             <div class="layui-card">
-                <div class="layui-card-header">图片设置</div>
+                <div class="layui-card-header">
+                    <div id="imgSettingName">图片设置 -- 当前分类：无</div>
+                </div>
                 <div class="layui-card-body">
-                    <div>
-                        dd
+                    <div id="page"></div>
+                    <div id="imgSettingBody">
+                        <div class="layui-row layui-col-space10" id="imgInfo">
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,92 +57,174 @@
     }).extend({
         index: 'lib/index', //主入口模块
         eleTree: 'lib/eleTree'
-    }).use(['index','eleTree'],function () {
+    }).use(['index','eleTree','laypage','upload'],function () {
         var $ = layui.jquery;
         var eleTree = layui.eleTree;
-        var data=[
-            {
-                "id": 1,
-                "label": "安徽省",
-                "children": [
-                    {
-                        "id": 2,
-                        "label": "马鞍山市",
-                        "disabled": true,
-                        "children": [
-                            {
-                                "id": 3,
-                                "label": "和县"
-                            },
-                            {
-                                "id": 4,
-                                "label": "花山区",
-                                "checked": true
-                            }
-                        ]
-                    },
-                    {
-                        "id": 22,
-                        "label": "淮北市",
-                        "children": [
-                            {
-                                "id": 23,
-                                "label": "濉溪县"
-                            },
-                            {
-                                "id": 24,
-                                "label": "相山区",
-                                "checked": true
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "id": 5,
-                "label": "河南省",
-                "children": [
-                    {
-                        "id": 6,
-                        "label": "郑州市"
-                    }
-                ]
-            },
-            {
-                "id": 10,
-                "label": "江苏省",
-                "children": [
-                    {
-                        "id": 11,
-                        "label": "苏州市"
-                    },
-                    {
-                        "id": 12,
-                        "label": "南京市",
-                        "children": [
-                            {
-                                "id": 13,
-                                "label": "姑苏区"
-                            },
-                            {
-                                "id": 14,
-                                "label": "相城区"
-                            }
-                        ]
-                    }
-                ]
-            }
-        ];
-        var obj={
-            elem: '.ele1',
-            data: data,
-            // url: "../eleTree/tree.json",
-            renderAfterExpand: true,
-            expandOnClickNode: true,
-            defaultCheckedKeys: [23]
-        }
+        var admin = layui.admin;
+        var laypage = layui.laypage;
+        var upload = layui.upload;
+        var myMethod = {
+            init:function () {
+                admin.req({
+                    url: '/imgCtrl/getImgCategory' //实际使用请改成服务端真实接口
+                    ,data: {}
+                    ,done: function(res){
+                        var merchantCode = res.data[0].merchantCode;
+                        var tree = eleTree.render({
+                            elem: '.ele1',
+                            data: res.data,
+                            renderAfterExpand: true,
+                            expandOnClickNode: false,
+                            highlightCurrent: true,
+                            draggable: true,
+                            defaultExpandedKeys: [0],
+                            contextmenuList: ['add','edit','remove']
+                        });
 
-        var el1=eleTree.render(obj);
+
+                        eleTree.on("nodeClick(data1)",function(d) {
+                            $("#imgSettingName").html("图片设置 -- 当前分类："+d.data.currentData.label);
+                            // 点击的类别
+                            var categoryId = d.data.currentData.id;
+                            // 该类别下的所有类别
+                            var categoryIdList = [categoryId];
+                            categoryIdList = myMethod.getAllCategoryId(d.data.currentData.children,categoryIdList);
+                            myMethod.initPage(categoryIdList);
+                        });
+
+                        // 添加子节点
+                        eleTree.on("nodeAppend(data1)",function(e) {
+                            var p = e.data.id;
+                            var label = e.newData.label;
+                            admin.req({
+                                url: '/imgCtrl/addImgCategory' //实际使用请改成服务端真实接口
+                                , data: {"parentId":p,"label":label,"merchantCode":merchantCode}
+                                , done: function (res) {
+                                    myMethod.reloadNode(res,tree,p);
+                                }
+                            });
+                        });
+
+                        // 添加节点之后
+                        eleTree.on("nodeInsertAfter(data1)",function(d) {
+                            var p = d.data.id;
+                            var label = d.newData.label;
+                            admin.req({
+                                url: '/imgCtrl/addImgCategory' //实际使用请改成服务端真实接口
+                                , data: {"parentId":p,"label":label,"merchantCode":merchantCode,"addType":1}
+                                , done: function (res) {
+                                    myMethod.reloadNode(res,tree,p);
+                                }
+                            });
+                        });
+                        // 修改
+                        eleTree.on("nodeEdit(data1)",function(d) {
+                            var id = d.data.id;
+                            var label = d.value;
+                            admin.req({
+                                url: '/imgCtrl/editImgCategory'
+                                , data: {"id":id,"label":label}
+                                , done: function (res) {
+
+                                }
+                            });
+                        });
+                        // 删除
+                        eleTree.on("nodeRemove(data1)",function(d) {
+                            var id = d.data.id;
+                            admin.req({
+                                url: '/imgCtrl/deleteImgCategory' //实际使用请改成服务端真实接口
+                                , data: {"id":id}
+                                , done: function (res) {
+
+                                }
+                            });
+                        });
+
+                    }
+                });
+            },
+            initImg:function (categoryIdList,pageSize,pageNum) {
+                admin.req({
+                    url: '/imgCtrl/listImgInfo' //实际使用请改成服务端真实接口
+                    , data: {"categoryIdList":JSON.stringify(categoryIdList),"pageSize":pageSize,"pageNum":pageNum}
+                    , done: function (res) {
+                        var imgInfo = "";
+                        if (pageNum == 1){
+                            imgInfo = "<div class=\"layui-col-sm3\" id=\"uploadImg\" style=\"cursor:pointer;\" title=\"点击上传图片\">\n" +
+                                "<img style=\"height: 100%;width: 100%;\" src=\"../../layuiadmin/style/res/template/upload.png\">\n" +
+                                "</div>";
+                        }
+                        for (var i = 0; i < res.data.length; i++) {
+                            imgInfo += "<div class=\"layui-col-sm3\">\n" +
+                                "<img style=\"height: 100%;width: 100%;\" src=\"../../img/"+res.data[i].imgUrl+"\">\n" +
+                                "</div>";
+                        }
+                        $("#imgInfo").html(imgInfo);
+                        // 初始化文件上传
+                        if (pageNum == 1){
+                            myMethod.initUpload(categoryIdList[0],categoryIdList);
+                        }
+                    }
+                });
+            },
+            getAllCategoryId:function (arr,newArr) {
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i].children.length === 0) {
+                        newArr.push(arr[i].id);
+                    } else {
+                        newArr.push(arr[i].id);
+                        newArr = myMethod.getAllCategoryId(arr[i].children, newArr);
+                    }
+                }
+                return newArr;
+            },
+            initUpload:function (categoryId,categoryIdList) {
+                //初始化上传图片
+                upload.render({
+                    elem: '#uploadImg'
+                    ,url: '/imgCtrl/uploadImg'
+                    ,multiple: true
+                    ,accept: 'file' //普通文件
+                    ,data: {"categoryId":categoryId}
+                    ,done: function(res){
+                        myMethod.initPage(categoryIdList);
+                    }
+                });
+            },
+            reloadNode:function (res,tree,id) {
+                var obj = {
+                    elem: '.ele1',
+                    data: res.data,
+                    renderAfterExpand: true,
+                    expandOnClickNode: false,
+                    draggable: true,
+                    defaultExpandedKeys: [0,id],
+                    contextmenuList: ['add','edit','remove']
+                };
+                tree.reload(obj);
+            },
+            initPage:function (categoryIdList) {
+                // 初始化图片信息
+                admin.req({
+                    url: '/imgCtrl/countImgInfo' //实际使用请改成服务端真实接口
+                    , data: {"categoryIdList":JSON.stringify(categoryIdList)}
+                    , done: function (res) {
+                        // 初始化分页
+                        laypage.render({
+                            elem: 'page'
+                            ,count: res.data
+                            ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                            ,jump: function(obj){
+                                myMethod.initImg(categoryIdList,obj.limit,obj.curr);
+                            }
+                        });
+                    }
+                });
+            }
+        };
+
+        myMethod.init();
     });
 </script>
 </body>

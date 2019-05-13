@@ -12,17 +12,28 @@ import java.util.List;
  */
 public class ImgCategoryBO extends ImgCategory
 {
+    // 插入方式  1 插入同级分类 2 插入子分类
+    private int addType;
     // 子类集合
-    private List<ImgCategoryBO> imgCategorieList;
+    private List<ImgCategoryBO> children;
 
-
-    public List<ImgCategoryBO> getImgCategorieList()
+    public int getAddType()
     {
-        return imgCategorieList;
+        return addType;
     }
 
-    public void setImgCategorieList(List<ImgCategoryBO> imgCategorieList)
+    public void setAddType(int addType)
     {
-        this.imgCategorieList = imgCategorieList;
+        this.addType = addType;
+    }
+
+    public List<ImgCategoryBO> getChildren()
+    {
+        return children;
+    }
+
+    public void setChildren(List<ImgCategoryBO> children)
+    {
+        this.children = children;
     }
 }

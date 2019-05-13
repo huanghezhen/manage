@@ -1,10 +1,12 @@
 package com.manage.service.iface.user;
 
 import com.manage.entity.Ret;
+import com.manage.entity.table.User;
 import com.manage.entity.user.UserLoginModel;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @ClassName: UserService
@@ -18,4 +20,6 @@ public interface UserService
     Ret home(HttpServletRequest request);
     Ret logout(HttpServletRequest request);
     void getCode(HttpServletRequest request, HttpServletResponse response);
+
+    List<User> getAllUser();
 }

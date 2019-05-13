@@ -15,8 +15,14 @@ public class Const
     // 成功
     public static final String SUCCEED = "0";
     public static final String SUCCEED_MSG = "成功";
+    // session 用户信息
     public static final String SESSION_USER = "SESSION_USER";
+    // session 验证码
     public static final String SESSION_CODE = "SESSION_CODE";
+    // 上传图片的保存位置
+    public static final String IMG_PATH = "/static/img/";
+    // 第一个label的名字
+    public static final String FIRST_LABEL = "全部分类";
     public static final Integer PRODUCT_UP_STATUS=1;
     public static final Integer PRODUCT_DOWN_STATUS=0;
 
@@ -32,7 +38,12 @@ public class Const
         PRODUCT_CATEGORY_NOT_EXIT("-9","此商品分类不存在"),
         PRODUCT_CATEGORY_SON_NOT_EXIT("-10","此商品分类不存在"),
         SAVE_ERROR("-11","新增失败"),
-        UPDATE_ERROR("-12","修改失败")
+        UPDATE_ERROR("-12","修改失败"),
+        ADD_IMG_CATEGORY_ERROR("-13","新增分类失败"),
+        ALL_CATEGORY_ERROR("-14","全部分类不能添加同级分类"),
+        EDIT_IMG_CATEGORY_ERROR("-15","修改分类失败"),
+        DELETE_IMG_CATEGORY_ERROR("-15","修改分类失败"),
+        UPLOAD_IMG__ERROR("-16","上传图片失败，图片为："),
         ;
 
         // 错误码

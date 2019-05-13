@@ -48,26 +48,12 @@ CREATE TABLE `user` (
   PRIMARY KEY (`user_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
-
-CREATE TABLE `product` (
-  `product_id` varchar(64) NOT NULL,
-  `product_name` varchar(255) NOT NULL,
-  `product_price` decimal(20,0) NOT NULL,
-  `product_description` varchar(300) DEFAULT NULL,
-  `product_icon` varchar(255) DEFAULT NULL,
-  `product_status` tinyint(11) DEFAULT '0',
-  `category_type` int(11) DEFAULT NULL,
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品表';
-
-CREATE TABLE `product_category` (
-  `category_id` int(11) NOT NULL,
-  `category_name` varchar(64) DEFAULT NULL,
-  `category_type` int(11) DEFAULT NULL,
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `parent_id` int(11) DEFAULT '0',
-  PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品分类表';
+CREATE TABLE `img_info` (
+  `img_code` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `category_id` int(11) DEFAULT NULL COMMENT '所属分类',
+  `img_url` varchar(255) DEFAULT NULL COMMENT '图片地址',
+  `merchant_code` varchar(255) DEFAULT NULL COMMENT '商户编码',
+  `user_code` varchar(255) DEFAULT NULL COMMENT '用户编码',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
+  PRIMARY KEY (`img_code`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;

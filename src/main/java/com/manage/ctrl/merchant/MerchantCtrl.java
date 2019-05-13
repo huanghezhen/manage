@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MerchantCtrl
 {
     @Autowired
-    private       MerchantService merchantService;
+    private MerchantService merchantService;
 
     /**
      * 注册商户

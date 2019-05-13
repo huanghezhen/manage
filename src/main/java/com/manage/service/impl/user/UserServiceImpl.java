@@ -36,10 +36,10 @@ public class UserServiceImpl implements UserService
     public Ret login(UserLoginModel userLoginModel, HttpServletRequest request)
     {
         HttpSession session = request.getSession();
-        String code = (String) session.getAttribute(Const.SESSION_CODE);
+        /*String code = (String) session.getAttribute(Const.SESSION_CODE);
         if (code == null || userLoginModel.getCode() == null || !code.equals(userLoginModel.getCode())){
             return Ret.getRet(Const.failedEnum.SESSION_CODE_FAILED.getCode(),Const.failedEnum.SESSION_CODE_FAILED.getMsg());
-        }
+        }*/
         User user = userMapper.getUser(userLoginModel.getUserCode());
         if (user == null){
             return Ret.getRet(Const.failedEnum.UNUSER.getCode(),Const.failedEnum.UNUSER.getMsg());

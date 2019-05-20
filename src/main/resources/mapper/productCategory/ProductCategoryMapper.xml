@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.manage.dao.productCategory.ProductCategoryMapper" >
     <sql id="product_category_field">
-      /*categoryId,categoryName,categoryType,createTime,updateTime*/
       CATEGORY_ID,CATEGORY_NAME,CATEGORY_TYPE,CREATE_TIME,UPDATE_TIME,PARENT_ID
     </sql>
     <insert id="saveProductCategory" parameterType="com.manage.entity.productCategory.ProductCategoryModel">
@@ -52,6 +51,14 @@
         </set>
         WHERE CATEGORY_ID = #{categoryId}
     </update>
+
+    
+    <delete id="deleteByIds">
+        DELETE FROM PRODUCT_CATEGORY WHERE CATEGORY_ID IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 
 
 </mapper>

@@ -20,5 +20,6 @@ public interface ProductCategoryMapper {
     int saveProductCategory(ProductCategoryModel productCategoryModel);
     List<ProductCategoryModel> findByParentId(int parentId);
     List<ProductCategoryModel> findByIdIn(List<Integer> categoryIds);
+    int deleteByIds(List<Integer> categoryIds);
 
 }

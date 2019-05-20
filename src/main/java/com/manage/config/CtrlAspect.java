@@ -54,7 +54,7 @@ public class CtrlAspect
         HttpServletRequest request = attributes.getRequest();
         HttpSession session = request.getSession();
         // todo 上线去掉自动登陆功能
-        //autoLogin(session);
+        autoLogin(session);
         Object user = session.getAttribute(Const.SESSION_USER);
         Object ret;
         if (Const.CAN_NOT_LOGIN_LIST.contains(methodName) || user != null){
@@ -77,9 +77,9 @@ public class CtrlAspect
 
     private void autoLogin(HttpSession session){
         User user = new User();
-        user.setMerchantCode("hhz");
-        user.setUserCode("1");
-        user.setUserName("666");
+        user.setMerchantCode("001");
+        user.setUserCode("001");
+        user.setUserName("admin");
         user.setState(1);
         session.setAttribute(Const.SESSION_USER,user);
     }

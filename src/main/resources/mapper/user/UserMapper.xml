@@ -5,4 +5,8 @@
         select user_code, merchant_code, user_name, user_passwd, state, create_time, update_time from user
         where user_code = #{userCode}
     </select>
+
+    <select id="getAllUser" resultType="com.manage.entity.table.User">
+        select user_code, merchant_code, user_name, user_passwd, state, create_time, update_time from user
+    </select>
 </mapper>

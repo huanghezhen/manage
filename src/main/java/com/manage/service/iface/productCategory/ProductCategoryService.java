@@ -1,6 +1,7 @@
 package com.manage.service.iface.productCategory;
 
 import com.manage.entity.productCategory.ProductCategoryModel;
+import com.manage.vo.TreeVO;
 
 import java.util.List;
 
@@ -13,10 +14,11 @@ import java.util.List;
  */
 public interface ProductCategoryService {
     ProductCategoryModel findOne(int categoryId);
-    List<ProductCategoryModel> findAll();
+    List<TreeVO> findCategoryAndChild(Integer parentId);
     int updateProductCategory(ProductCategoryModel productCategoryModel);
     int saveProductCategory(ProductCategoryModel productCategoryModel);
     List<ProductCategoryModel> findByParentId(int parentId);
     List<ProductCategoryModel> findByIdIn(List<Integer> categoryIds);
+    int deleteCategoryIdAndChild(Integer categoryId);
 
 }

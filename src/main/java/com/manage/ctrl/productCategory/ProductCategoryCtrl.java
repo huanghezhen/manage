@@ -5,12 +5,14 @@ import com.manage.entity.Ret;
 import com.manage.entity.productCategory.ProductCategoryModel;
 import com.manage.exception.ManageException;
 import com.manage.service.iface.productCategory.ProductCategoryService;
+import com.manage.vo.TreeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,13 +35,12 @@ public class ProductCategoryCtrl {
         if(productCategoryModel==null){
             throw new ManageException(Const.failedEnum.PRODUCT_CATEGORY_NOT_EXIT);
         }
-        return new Ret(productCategoryModel, Const.SESSION_CODE,Const.SUCCEED_MSG);
+        return new Ret(productCategoryModel, Const.SUCCEED,Const.SUCCEED_MSG);
     }
 
     @RequestMapping("/findAll")
     public Ret findAll(){
-        List<ProductCategoryModel> all = productCategoryService.findAll();
-        return new Ret(all,Const.SESSION_CODE,Const.SUCCEED_MSG);
+        return new Ret( productCategoryService.findCategoryAndChild(0),Const.SUCCEED,Const.SUCCEED_MSG);
     }
 
     @RequestMapping("/findByParentId")
@@ -48,24 +49,39 @@ public class ProductCategoryCtrl {
         if(CollectionUtils.isEmpty(byParentId)){
             throw new ManageException(Const.failedEnum.PRODUCT_CATEGORY_SON_NOT_EXIT);
         }
-        return new Ret(byParentId,Const.SESSION_CODE,Const.SUCCEED_MSG);
+        return new Ret(byParentId,Const.SUCCEED,Const.SUCCEED_MSG);
     }
-
     @RequestMapping("/saveProductCategory")
-    public Ret saveProductCategory(@RequestParam("productgory")ProductCategoryModel productCategoryModel){
+    public Ret saveProductCategory(TreeVO treeVO){
+        ProductCategoryModel productCategoryModel = new ProductCategoryModel();
+        productCategoryModel.setParentId(Integer.valueOf(treeVO.getParentId()));
+        productCategoryModel.setCategoryName(treeVO.getLabel());
+        productCategoryModel.setCreateTime(new Date());
         int resultCode = productCategoryService.saveProductCategory(productCategoryModel);
         if(resultCode<0){
             throw new ManageException(Const.failedEnum.SAVE_ERROR);
         }
-        return new Ret(Const.SESSION_CODE,Const.SUCCEED_MSG);
+        return Ret.getRetT(findAll().getData());
     }
     @RequestMapping("/updateProductCategory")
-    public Ret updateProductCategory(@RequestParam("productCategory") ProductCategoryModel productCategoryModel){
+    public Ret updateProductCategory(TreeVO treeVO){
+        ProductCategoryModel productCategoryModel = new ProductCategoryModel();
+        productCategoryModel.setCategoryId(Integer.valueOf(treeVO.getId()));
+        productCategoryModel.setCategoryName(treeVO.getLabel());
         int resultCode = productCategoryService.updateProductCategory(productCategoryModel);
         if(resultCode<0){
             throw new ManageException(Const.failedEnum.UPDATE_ERROR);
         }
-        return new Ret(Const.SESSION_CODE,Const.SUCCEED_MSG);
+        return Ret.getRetT(findAll().getData());
+    }
+
+    @RequestMapping("/deleteCategoryIdAndChild")
+    public Ret deleteCategoryIdAndChild(Integer categoryId){
+        int resultCode = productCategoryService.deleteCategoryIdAndChild(categoryId);
+        if(resultCode<0){
+            throw new ManageException(Const.failedEnum.UPDATE_ERROR);
+        }
+        return Ret.getRetT(findAll().getData());
     }
 
 

@@ -141,6 +141,12 @@ public class UserServiceImpl implements UserService
         }
     }
 
+    @Override
+    public java.util.List<User> getAllUser() {
+        java.util.List<User> user=userMapper.getAllUser();
+        return user;
+    }
+
     private Color getRandColor(int StartNumC, int EndNumC)
     {
         Random random = new Random();

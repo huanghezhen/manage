@@ -23,6 +23,7 @@ public class InitData implements ApplicationRunner
         // 添加可以不登陆访问的接口
         Const.CAN_NOT_LOGIN_LIST.add("com.manage.ctrl.user.UserCtrl.getCode");
         Const.CAN_NOT_LOGIN_LIST.add("com.manage.ctrl.user.UserCtrl.login");
+       /* Const.CAN_NOT_LOGIN_LIST.add("com.manage.ctrl.product.ProductCtrl.findUpAll");*/
         logger.info("初始化参数结束");
     }
 }

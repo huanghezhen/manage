@@ -63,6 +63,7 @@
         var admin = layui.admin;
         var laypage = layui.laypage;
         var upload = layui.upload;
+        var imgPathUrl = layui.setter.imgPathUrl;
         var myMethod = {
             init:function () {
                 admin.req({
@@ -157,12 +158,12 @@
                         }
                         for (var i = 0; i < res.data.length; i++) {
                             imgInfo += "<div class=\"layui-col-sm3\">\n" +
-                                "<img style=\"height: 100%;width: 100%;\" src=\"../../img/"+res.data[i].imgUrl+"\">\n" +
+                                "<img style=\"height: 100%;width: 100%;\" src=\""+imgPathUrl+res.data[i].imgUrl+"\">\n" +
                                 "</div>";
                         }
                         $("#imgInfo").html(imgInfo);
                         // 初始化文件上传
-                        if (pageNum == 1){
+                        if (pageNum === 1){
                             myMethod.initUpload(categoryIdList[0],categoryIdList);
                         }
                     }

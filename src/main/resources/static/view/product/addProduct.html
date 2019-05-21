@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>新增商品</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/style/eleTree.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+    <style>
+        .layui-upload-img{width: 92px; height: 92px; margin: 0 10px 10px 0;}
+    </style>
+</head>
+<body>
+
+<div class="layui-fluid" id="LAY-component-grid-mobile-pc">
+    <form class="layui-form" action="" lay-filter="component-form-element">
+    <div class="layui-row layui-col-space12">
+        <div class="layui-col-xs6 layui-col-md12">
+            <!-- 填充内容 -->
+            <div class="layui-card">
+                <div class="layui-card-header">基本信息</div>
+                <div class="layui-card-body">
+                    <div class="layui-card-body">
+                            <div class="layui-row layui-col-space10 layui-form-item">
+                                <div class="layui-col-lg6">
+                                    <label class="layui-form-label">商品名称：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="productName" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-col-lg6">
+                                    <label class="layui-form-label">商品单价：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="productPrice" placeholder="￥" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">商品分类：</label>
+                                <div class="layui-input-block">
+                                    <div>
+                                        <input type="hidden" name="categoryType" id="categoryType" class="layui-input" readonly="true">
+                                        <input type="text" name="categoryName" id="categoryName" placeholder="请从下面进行选择" class="layui-input" readonly="true">
+                                        <div class="eleTree ele1" lay-filter="data1"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">商品状态：</label>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="productStatus" value="1" title="上架" checked>
+                                    <input type="radio" name="productStatus" value="0" title="下架">
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs6 layui-col-md12">
+            <!-- 填充内容 -->
+            <div class="layui-card">
+                <div class="layui-card-header">商品图片</div>
+                <div class="layui-card-body">
+                    <div class="layui-upload">
+                        <!--<button type="button" class="layui-btn">多图片上传</button>-->
+                        <blockquote class="layui-elem-quote layui-quote-nm">
+                            <div class="layui-upload-list" id="test-upload-more-list">
+                                <input type="hidden" name="productIcon" id="productIcon" class="layui-input" readonly="true">
+                                <img src="../../layuiadmin/style/res/template/upload.png" title="点击上传图片" class="layui-upload-img"  id="test-upload-more"/>
+                            </div>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs6 layui-col-md12">
+            <!-- 填充内容 -->
+            <div class="layui-card">
+                <div class="layui-card-header">商品描述</div>
+                <div class="layui-card-body">
+                    <textarea id="demo" style="display: none;" name="productDescription" lay-verify="article_desc"></textarea>
+                </div>
+            </div>
+        </div>
+
+    </div>
+     <div class="layui-row layui-col-space12">
+         <div class="layui-col-xs6 layui-col-md12">
+             <div class="layui-card">
+                 <div class="layui-card-body">
+                         <button class="layui-btn" lay-submit lay-filter="component-form-element">立即提交</button>
+                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+    </form>
+</div>
+<script src="../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index', //主入口模块
+        eleTree: 'lib/eleTree'
+    }).use(['index','table','layedit', 'upload','eleTree', 'form'],function () {
+        var $ = layui.jquery;
+        var admin = layui.admin;
+        var upload = layui.upload;
+        var eleTree = layui.eleTree;
+        var form = layui.form;
+        var productIcon="";
+        var myMethod={
+            init:function () {
+                layer.load(2);
+                admin.req({
+                    url: '/productCategoryCtrl/findAll' //实际使用请改成服务端真实接口
+                    ,data: {}
+                    ,done: function(res) {
+                        if(res.code==0){
+                            layer.closeAll('loading');
+                        }
+                        var tree = eleTree.render({
+                            elem: '.ele1',
+                            data: res.data,
+                            renderAfterExpand: true,
+                            expandOnClickNode: false,
+                            highlightCurrent: true,
+                            draggable: true,
+                            defaultExpandedKeys: [0],
+                            emptText: "暂无数据",
+                           /* showCheckbox: true,*/
+                            checkOnClickNode: true,
+                            searchNodeMethod: function (value, data) {
+                                if (!value) return true;
+                                return data.label.indexOf(value) !== -1;
+                            },
+                        });
+                        eleTree.on("nodeClick(data1)",function(d) {
+                            $("#categoryType").val(d.data.currentData.id);
+                            $("#categoryName").val(d.data.currentData.label);
+                        });
+                    }
+                });
+            },
+        }
+        myMethod.init();
+
+        var layedit = layui.layedit;
+        layedit.set({
+            uploadImage: {
+                url: '/imgCtrl/uploadImgBackLayVo' //接口url
+                ,type: '' //默认post
+            }
+        });
+       var index= layedit.build('demo'); //建立编辑器
+
+        //多图片上传
+        var uploadInst=upload.render({
+            elem: '#test-upload-more'
+            ,url: '/imgCtrl/uploadImg'
+            ,multiple: true
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                var exceedLimit = false;
+                var count=0;
+                for (var x in files) {
+                    count++;
+                    if (count > 5) {
+                        exceedLimit = true;
+                        delete files[x];
+                        count--;
+                    }
+                }
+                if (exceedLimit) {
+                    layer.msg('只能上传五个文件!<br>操作无法进行,如有需求请联系管理员', {
+                        icon: 5
+                    });
+                }
+                if($("#categoryType").val()!=null && $("#categoryType").val() !="" ){
+                    obj.preview(function(index, file, result){
+                        $('#test-upload-more-list').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+                    });
+                }else{
+                    layer.msg("请选择商品分类");
+                }
+
+            }
+            ,done: function(res){
+                //上传完毕
+                if(res.code!=0){
+                   return layui.msg("上传失败！");
+                }
+                if(productIcon.length<=0){
+                    productIcon=res.data;
+                }else{
+                    productIcon+=","+res.data;
+                }
+                $("#productIcon").val(productIcon);
+            }, error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#test-upload-more-list');
+                $('#test-upload-more-list').append('<a class="layui-btn layui-btn-mini demo-reload">重试</a>')
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+        });
+        form.render(null, 'component-form-element');
+        //自定义验证规则
+        form.verify({
+            article_desc: function(value){
+                layedit.sync(index);
+            }
+        });
+        form.on('submit(component-form-element)', function(data){
+            layer.msg(JSON.stringify(data.field));
+            console.log(JSON.stringify(data.field));
+
+            admin.req({
+                url: '/productCtrl/saveProduct' //实际使用请改成服务端真实接口
+                ,data: data.field/*{
+                    productName:data.field.productName,
+                    productPrice:data.field.productPrice,
+                    productDescription:data.field.productDescription,
+                    productIcon:data.field.productIcon,
+                    productStatus:data.field.productStatus,
+                    categoryType:data.field.categoryType,
+                }*/
+                ,dataType:'JSON'
+                ,done: function(res) {
+                    if(res.code!=0){
+                        return  layer.alert("商品增加失败",{icon:16});
+                    }
+                    return layer.alert("商品增加成功",function(){
+                        window.parent.location.reload();
+                        parent.layer.close(index);
+                    });
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

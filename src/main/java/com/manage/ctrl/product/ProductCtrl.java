@@ -2,6 +2,7 @@ package com.manage.ctrl.product;
 
 import com.manage.config.Const;
 import com.manage.entity.Ret;
+import com.manage.entity.TableRet;
 import com.manage.entity.product.ProductModel;
 import com.manage.entity.productCategory.ProductCategoryModel;
 import com.manage.exception.ManageException;
@@ -35,12 +36,12 @@ public class ProductCtrl {
     private ProductCategoryService productCategoryService;
 
     @RequestMapping("/saveProduct")
-    public Ret saveProduct(@RequestParam("product") ProductModel productModel){
+    public Ret saveProduct(ProductModel productModel){
         int resultCode = productService.saveProduct(productModel);
         if(resultCode<0){
             throw new ManageException(Const.failedEnum.SAVE_ERROR);
         }
-        return new Ret(Const.SESSION_CODE,Const.SUCCEED_MSG);
+        return Ret.getRet();
     }
 
     @RequestMapping("/findOne")
@@ -92,6 +93,30 @@ public class ProductCtrl {
         if (resultCode<0)
             throw new ManageException(Const.failedEnum.UPDATE_ERROR);
         return new Ret(Const.SESSION_CODE,Const.SUCCEED_MSG);
+    }
+
+
+    @RequestMapping("/findProduct")
+    public TableRet findProduct(@RequestParam("page") Integer page,@RequestParam("limit") Integer limit){
+        System.out.println("page:"+page+"limit:"+limit);
+        ProductModel productModel = new ProductModel();
+        List<ProductModel> allProduct = productService.getProductBySomething(productModel, null, null);
+        if (allProduct.size()<0)
+            throw new ManageException(Const.failedEnum.FIND_ERROR);
+        List<ProductModel> productBySomething = productService.getProductBySomething(productModel,page, limit);
+        return TableRet.getTableRetT(productBySomething,allProduct.size());
+    }
+
+    @RequestMapping("/delProduct")
+    public Ret delProduct(@RequestParam("ids[]") String... ids){
+        List<String> productIds = new ArrayList<>();
+        System.out.println(ids[0]);
+        for (String id:ids)
+            productIds.add(id);
+        int resultCode = productService.delProduct(productIds);
+        if(resultCode<0)
+            throw new ManageException(Const.failedEnum.UPDATE_ERROR);
+        return Ret.getRet();
     }
 
 }

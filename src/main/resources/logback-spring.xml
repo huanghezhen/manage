@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <property name="PROJECT" value="manage" />
-    <property name="ROOT" value="D:/desktop/log/${PROJECT}/"/>
+    <property name="ROOT" value="/root/log/${PROJECT}/"/>
     <property name="FILESIZE" value="50MB" />
     <property name="MAXHISTORY" value="15" />
     <timestamp key="DATETIME" datePattern="yyyy-MM-dd HH:mm:ss" />

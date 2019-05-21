@@ -21,6 +21,7 @@ public interface ImgService
     Ret editImgCategory(ImgCategory imgCategory);
     Ret deleteImgCategory(ImgCategory imgCategory);
     Ret uploadImg(Integer categoryId,MultipartFile file,HttpServletRequest request);
+    Ret uploadImgBackLayVo(Integer categoryId,MultipartFile file,HttpServletRequest request);
     Ret countImgInfo(String categoryIdList,HttpServletRequest request);
     Ret listImgInfo(ImgInfoBO imgInfoBO,HttpServletRequest request);
 }

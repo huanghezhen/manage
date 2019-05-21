@@ -11,6 +11,7 @@ import com.manage.entity.table.User;
 import com.manage.service.iface.img.ImgService;
 import com.manage.util.ImgUtil;
 import com.manage.util.SequenceGenerator;
+import com.manage.vo.LayEditVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
@@ -119,6 +120,35 @@ public class ImgServiceImpl implements ImgService
                         Const.failedEnum.UPLOAD_IMG__ERROR.getMsg() + file.getOriginalFilename());
             }
             return Ret.getRetT(path);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            return Ret.getRet(Const.failedEnum.UPLOAD_IMG__ERROR.getCode(), Const.failedEnum.UPLOAD_IMG__ERROR.getMsg() + file.getOriginalFilename());
+        }
+    }
+
+    @Override
+    public Ret uploadImgBackLayVo(Integer categoryId, MultipartFile file, HttpServletRequest request)
+    {
+        User user = (User) request.getSession().getAttribute(Const.SESSION_USER);
+        try
+        {
+            String path = upload(file, request);
+            ImgInfo imgInfo = new ImgInfo();
+            imgInfo.setCategoryId(categoryId);
+            imgInfo.setImgUrl(path);
+            imgInfo.setMerchantCode(user.getMerchantCode());
+            imgInfo.setUserCode(user.getUserCode());
+            int i = imgMapper.addImgInfo(imgInfo);
+            if (i <= 0)
+            {
+                return Ret.getRet(Const.failedEnum.UPLOAD_IMG__ERROR.getCode(),
+                        Const.failedEnum.UPLOAD_IMG__ERROR.getMsg() + file.getOriginalFilename());
+            }
+            LayEditVo layEditVo = new LayEditVo();
+            layEditVo.setSrc("../../img/"+path);
+            return Ret.getRetT(layEditVo);
         }
         catch (IOException e)
         {

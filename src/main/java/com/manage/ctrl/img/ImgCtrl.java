@@ -49,6 +49,10 @@ public class ImgCtrl
     public Ret uploadImg(Integer categoryId,MultipartFile file,HttpServletRequest request){
         return imgService.uploadImg(categoryId,file,request);
     }
+    @RequestMapping(value = "/uploadImgBackLayVo")
+    public Ret uploadImgBackLayVo(Integer categoryId,MultipartFile file,HttpServletRequest request){
+        return imgService.uploadImgBackLayVo(categoryId,file,request);
+    }
 
     @RequestMapping(value = "/countImgInfo")
     public Ret countImgInfo(String categoryIdList,HttpServletRequest request){

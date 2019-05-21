@@ -18,6 +18,28 @@
         SELECT <include refid="product_field"></include> FROM  product WHERE PRODUCT_STATUS=#{@com.manage.config.Const@PRODUCT_UP_STATUS}
     </select>
 
+    <select id="getProductBySomething" parameterType="com.manage.entity.product.ProductModel" resultType="com.manage.entity.product.ProductModel">
+        SELECT  <include refid="product_field"></include>  FROM  product WHERE 1=1
+            <if test="productModel.productName!=null and productModel.productName!=''">
+                 AND product_name = #{productModel.productName}
+            </if>
+            <if test="productModel.productPrice!=null and productModel.productPrice!=''">
+                AND PRODUCT_PRICE = #{productModel.productPrice}
+            </if>
+            <if test="productModel.productStatus!=null and productModel.productStatus!=''">
+                AND PRODUCT_STATUS = #{productModel.productStatus}
+            </if>
+            <if test="productModel.categoryType!=null and productModel.categoryType!=''">
+                AND CATEGORY_TYPE = #{productModel.categoryType}
+            </if>
+            <if test="productModel.createTime!=null and productModel.createTime!=''">
+                AND CREATE_TIME = #{productModel.createTime}
+            </if>
+            <if test="pageSize !=null and pageSize!=''">
+                limit #{currIndex},#{pageSize}
+            </if>
+    </select>
+
     <select id="findAll" resultType="com.manage.entity.product.ProductModel">
         SELECT  <include refid="product_field"></include> FROM product
     </select>
@@ -52,6 +74,13 @@
         </set>
         where PRODUCT_ID = #{productId}
     </update>
+
+    <delete id="delProduct">
+        DELETE FROM product WHERE PRODUCT_ID IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 
 
 </mapper>

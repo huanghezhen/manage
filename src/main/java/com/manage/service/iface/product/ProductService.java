@@ -18,4 +18,6 @@ public interface ProductService {
     List<ProductModel> findUpAll(Integer productStatus);
     List<ProductModel> findAll();
     int updateProduct(ProductModel product);
+    List<ProductModel> getProductBySomething(ProductModel productModel,Integer currPage,Integer pageSize);
+    int delProduct(List<String> productIds);
 }

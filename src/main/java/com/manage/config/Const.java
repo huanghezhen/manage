@@ -20,7 +20,7 @@ public class Const
     // session 验证码
     public static final String SESSION_CODE = "SESSION_CODE";
     // 上传图片的保存位置
-    public static final String IMG_PATH = "/static/img/";
+    public static final String IMG_PATH = "/root/img/";
     // 第一个label的名字
     public static final String FIRST_LABEL = "全部分类";
     public static final Integer PRODUCT_UP_STATUS=1;

@@ -26,6 +26,7 @@ public class Const
     public static final Integer PRODUCT_UP_STATUS=1;
     public static final Integer PRODUCT_DOWN_STATUS=0;
 
+
     public enum failedEnum{
         SAVE_MERCHANT_FAILED("-1", "注册商户失败"),
         UPDATE_MERCHANT_FAILED("-2", "修改商户失败"),
@@ -44,6 +45,7 @@ public class Const
         EDIT_IMG_CATEGORY_ERROR("-15","修改分类失败"),
         DELETE_IMG_CATEGORY_ERROR("-15","修改分类失败"),
         UPLOAD_IMG__ERROR("-16","上传图片失败，图片为："),
+        FIND_ERROR("-17","查询失败"),
         ;
 
         // 错误码

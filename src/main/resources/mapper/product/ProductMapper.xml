@@ -59,7 +59,7 @@
             <if test="productIcon!=null and productIcon!=''">
                 PRODUCT_ICON = #{productIcon},
             </if>
-            <if test="productStatus!=null and productStatus!=''">
+            <if test="productStatus == 0 || productStatus!=null and productStatus!=''">
                 PRODUCT_STATUS = #{productStatus},
             </if>
             <if test="categoryType!=null and categoryType!=''">

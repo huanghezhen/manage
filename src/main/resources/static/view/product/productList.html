@@ -18,32 +18,9 @@
             <button class="layui-btn layuiadmin-btn-tags" data-type="add">添加</button>
             <button class="layui-btn layuiadmin-btn-danger" data-type="delProduct" id="delProduct">批量删除</button>
         </div>
-
-        <!--<div class="layui-card-body">
-            <div class="layui-table-tool">
-                <div class="layui-table-tool-temp">
-                    <div class="layui-btn-container">
-                        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
-                        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-                        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
-                    </div>
-                </div>
-                <div class="layui-table-tool-self">
-                    <div class="layui-inline" title="筛选列" lay-event="LAYTABLE_COLS">
-                        <i class="layui-icon layui-icon-cols"></i>
-                    </div>
-                    <div class="layui-inline" title="导出" lay-event="LAYTABLE_EXPORT">
-                        <i class="layui-icon layui-icon-export">
-                        </i>
-                    </div>
-                    <div class="layui-inline" title="打印" lay-event="LAYTABLE_PRINT">
-                        <i class="layui-icon layui-icon-print"></i>
-                    </div>
-                </div>
-            </div>-->
             <table id="demo" lay-filter="test"></table>
             <script type="text/html" id="barDemo">
-                <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+                <!--<a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>-->
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 
@@ -57,15 +34,18 @@
 </div>
 <script src="../../layuiadmin/layui/layui.js"></script>
 <script>
+
+    var dataJson="";
     layui.config({
         base: '../../layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index', //主入口模块
         eleTree: 'lib/eleTree'
-    }).use(['index','table'],function () {
+    }).use(['index','table','form'],function () {
         var $ = layui.jquery;
         var admin = layui.admin;
         var table = layui.table;
+//        var form =layui.form;
         var myMethod={
             init:function(){
                 table.render({
@@ -83,7 +63,22 @@
                     ,cols: [[ //表头
                         {field: 'productId', title: 'ID',align:'center',sort: true, fixed: 'left',hide:true}
                         ,{checkbox:true,align:'center',filter:'test'}
-                        ,{field: 'productIcon', title: '图片',align:'center',templet:'<div><img src="../../img/{{ d.productIcon }}"></div>'}
+                        , {field: 'productIcon', title: '图片', align: 'center',
+                            templet:/*'<div><img src="../../img/{{d.productIcon}}"></div>'*/
+                                function (d) {
+                                    var iconLength = d.productIcon.split(",").length;
+                                    console.log(iconLength);
+                                    if(iconLength>1){
+                                        var icon=d.productIcon.split(',')[0];
+                                        return '<div><img src="../../img/'+d.productIcon.split(",")[0]+'" style="width: 50px; height: 50px;"></div>';
+                                    }
+                                    return '<div><img src="../../img/{{d.productIcon}}"></div>';
+                                  /*  var divStr = "";
+                                    for (var i=0;i<iconLength;i++) {
+                                        divStr += '<div><img src="../../img/"+d.productIcon.split(",")[i]></div>';
+                                    }*/
+                            }
+                        }
                         ,{field: 'productName', title: '商品名称',align:'center' }
                         ,{field: 'productPrice', title: '价格',align:'center',sort: true}
                         ,{field: 'productDescription', title: '描述',align:'center'}
@@ -99,7 +94,8 @@
                             }
 
                         }
-                        ,{field: 'categoryType', title: '分类', align:'center'}
+                        ,{field: 'categoryType', title: '分类', align:'center',hide:true}
+                        ,{field: 'categoryName', title: '分类', align:'center'}
                         ,{field: 'createTime', title: '创建时间',align:'center', sort: true}
                         ,{field: 'updateTime', title: '修改时间',align:'center', sort: true}
                         ,{fixed: 'right',title: '编辑',align:'center', toolbar: '#barDemo',width:"20%"}
@@ -116,7 +112,6 @@
 
                     if(layEvent === 'detail'){ //查看
                         console.log("点击了查看按钮");
-                        //do somehing
                     } else if(layEvent === 'del'){ //删除
                         layer.confirm('确定删除此商品？', {icon:0},function(index){
                             //向服务端发送删除指令
@@ -137,17 +132,35 @@
                         });
                     } else if(layEvent === 'edit'){ //编辑
                         //do something
-                        //同步更新缓存对应的值
-                        obj.update({
-                            username: '123'
-                            ,title: 'xxx'
+                        dataJson=data;
+                        var index = layer.open({
+                            title:'编辑商品',
+                            type: 2,
+                            content: '../product/editProduct.html',
+                            area: ['300px', '300px'],
+                            maxmin: true/*,
+                            success : function(layero, index){
+                                var body = layui.layer.getChildFrame('body', index);
+                                if(data){
+                                    // 取到弹出层里的元素，并把编辑的内容放进去
+                                    body.find(".productId").val(data.productId);  //将选中的数据的id传到编辑页面的隐藏域，便于根据ID修改数据
+                                    body.find(".productName").val(data.productName);  //商品名称
+                                    body.find(".productPrice").val(data.productPrice);  //商品的单价
+//                                    body.find(".productStatus input[value="+data.productStatus+"]").prop("checked","checked");  //商品状态
+                                    body.find(".productIcon").val(data.productIcon);  //
+                                    // 记得重新渲染表单
+
+                                }
+                            }*/
+
                         });
+                        layer.full(index);
                     }
                 });
             }
-            ,reload: function () {
+            ,reloadPage: function () {
                /* var cr=tableIns.config.page.curr;//获取当前页码*/
-                console.log(cr);
+               /* console.log(cr);*/
                 var demoReload = $('#demo');
                 //执行重载
                 table.reload('demo', {
@@ -190,7 +203,7 @@
                                 if(res.code=="0"){
                                     layer.msg('删除成功');
                                     delList=[];
-                                    myMethod.reload();
+                                    myMethod.reloadPage();
                                 }else{
                                     delList=[];
                                     layer.msg('删除失败');

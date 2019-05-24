@@ -10,20 +10,79 @@
     <link rel="stylesheet" href="../../layuiadmin/style/eleTree.css" media="all">
     <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
     <style>
-        .layui-upload-img{width: 92px; height: 92px; margin: 0 10px 10px 0;}
+        .layui-upload-img{width: 100px; height: 100px; margin: 0 10px 10px 0;}
+        .layui-upload-list {
+            margin-left: -15px;
+        }
+        .layui-upload-list .info{
+            position: relative;
+            margin-top: -25px;
+            background-color: black;
+            color: white;
+            filter: alpha(Opacity=80);
+            -moz-opacity: 0.5;
+            opacity: 0.5;
+            width: 100px;
+            height: 25px;
+            text-align: center;
+            display: none;
+        }
+        .info {
+            position: relative;
+            margin-top: -25px;
+            background-color: black;
+            color: white;
+            filter: alpha(Opacity=80);
+            -moz-opacity: 0.5;
+            opacity: 0.5;
+            width: 100px;
+            height: 25px;
+            text-align: center;
+            display: none;
+        }
+
+        .layui-upload-list  .handle{
+            position: relative;
+            background-color: black;
+            color: white;
+            filter: alpha(Opacity=80);
+            -moz-opacity: 0.5;
+            opacity: 0.5;
+            width: 100px;
+            text-align: right;
+            height: 18px;
+            margin-bottom: -18px;
+            display: none;
+        }
+
+
+        .layui-upload-list .handle i {
+            margin-right: 5px;
+        }
+
+        .layui-upload-list .handle i:hover {
+            cursor: pointer;
+        }
+
+        .layui-upload-list .file-iteme {
+            margin: 12px 0 0 15px;
+            padding: 1px;
+            float: left;
+        }
+
     </style>
 </head>
 <body>
 
 <div class="layui-fluid" id="LAY-component-grid-mobile-pc">
     <form class="layui-form" action="" lay-filter="component-form-element">
-    <div class="layui-row layui-col-space12">
-        <div class="layui-col-xs6 layui-col-md12">
-            <!-- 填充内容 -->
-            <div class="layui-card">
-                <div class="layui-card-header">基本信息</div>
-                <div class="layui-card-body">
+        <div class="layui-row layui-col-space12">
+            <div class="layui-col-xs6 layui-col-md12">
+                <!-- 填充内容 -->
+                <div class="layui-card">
+                    <div class="layui-card-header">基本信息</div>
                     <div class="layui-card-body">
+                        <div class="layui-card-body">
                             <div class="layui-row layui-col-space10 layui-form-item">
                                 <div class="layui-col-lg6">
                                     <label class="layui-form-label">商品名称：</label>
@@ -55,48 +114,48 @@
                                     <input type="radio" name="productStatus" value="0" title="下架">
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="layui-col-xs6 layui-col-md12">
-            <!-- 填充内容 -->
-            <div class="layui-card">
-                <div class="layui-card-header">商品图片</div>
-                <div class="layui-card-body">
-                    <div class="layui-upload">
-                        <!--<button type="button" class="layui-btn">多图片上传</button>-->
-                        <blockquote class="layui-elem-quote layui-quote-nm">
-                            <div class="layui-upload-list" id="test-upload-more-list">
-                                <input type="hidden" name="productIcon" id="productIcon" class="layui-input" readonly="true">
-                                <img src="../../layuiadmin/style/res/template/upload.png" title="点击上传图片" class="layui-upload-img"  id="test-upload-more"/>
-                            </div>
-                        </blockquote>
+            <div class="layui-col-xs6 layui-col-md12">
+                <!-- 填充内容 -->
+                <div class="layui-card">
+                    <div class="layui-card-header">商品图片</div>
+                    <div class="layui-card-body">
+                        <div class="layui-upload">
+                            <!--<button type="button" class="layui-btn">多图片上传</button>-->
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-upload-list" id="test-upload-more-list" style="overflow: auto;">
+                                    <input type="hidden" name="productIcon" id="productIcon" class="layui-input" readonly="true">
+                                    <img src="../../layuiadmin/style/res/template/upload.png" title="点击上传图片" class="layui-upload-img"  id="test-upload-more" style="float:left;"/>
+                                </div>
+                            </blockquote>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="layui-col-xs6 layui-col-md12">
-            <!-- 填充内容 -->
-            <div class="layui-card">
-                <div class="layui-card-header">商品描述</div>
-                <div class="layui-card-body">
-                    <textarea id="demo" style="display: none;" name="productDescription" lay-verify="article_desc"></textarea>
+            <div class="layui-col-xs6 layui-col-md12">
+                <!-- 填充内容 -->
+                <div class="layui-card">
+                    <div class="layui-card-header">商品描述</div>
+                    <div class="layui-card-body">
+                        <textarea id="demo" style="display: none;" name="productDescription" lay-verify="article_desc"></textarea>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    </div>
-     <div class="layui-row layui-col-space12">
-         <div class="layui-col-xs6 layui-col-md12">
-             <div class="layui-card">
-                 <div class="layui-card-body">
-                         <button class="layui-btn" lay-submit lay-filter="component-form-element">立即提交</button>
-                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                 </div>
-             </div>
-         </div>
-     </div>
+        </div>
+        <div class="layui-row layui-col-space12">
+            <div class="layui-col-xs6 layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <button class="layui-btn" lay-submit lay-filter="component-form-element">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 <script src="../../layuiadmin/layui/layui.js"></script>
@@ -113,6 +172,10 @@
         var eleTree = layui.eleTree;
         var form = layui.form;
         var productIcon="";
+        var productIcons=[];
+        var files;
+        var uploadStatus=true;  //上传状态
+        var layedit;
         var myMethod={
             init:function () {
                 layer.load(2);
@@ -132,7 +195,6 @@
                             draggable: true,
                             defaultExpandedKeys: [0],
                             emptText: "暂无数据",
-                           /* showCheckbox: true,*/
                             checkOnClickNode: true,
                             searchNodeMethod: function (value, data) {
                                 if (!value) return true;
@@ -145,104 +207,145 @@
                         });
                     }
                 });
+                layedit = layui.layedit;
+                layedit.set({
+                    uploadImage: {
+                        url: '/imgCtrl/uploadImgBackLayVo' //接口url
+                        ,type: '' //默认post
+                    }
+                });
+                var index= layedit.build('demo'); //建立编辑器
+
+                //多图片上传
+                var uploadInst=upload.render({
+                    elem: '#test-upload-more'
+                    ,url: '/imgCtrl/uploadImg'
+                    ,multiple: true
+                    ,choose:function(obj){
+                        files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                        if(productIcons.length>4){
+                            //进行修改上传状态
+                            uploadStatus=false;
+                            myMethod.delteFiles(index);
+                            $(this).parent().remove();
+                            return layer.msg('只能上传五个文件!<br>操作无法进行,如有需求请联系管理员', {
+                                icon: 5
+                            });
+                        }
+                        if($("#categoryType").val()!=null && $("#categoryType").val() !=""){
+                            //进行修改上传状态
+                            uploadStatus=true;
+                            return myMethod.appendImage(obj);
+                        }else{
+                            //进行修改上传状态
+                            uploadStatus=false;
+                            myMethod.delteFiles(index);
+                            return layer.msg("请选择商品分类");
+                        }
+                        return false;
+                    }
+                    ,before: function(obj){
+                    }
+                    ,done: function(res,index){
+                        //上传完毕
+                        if(res.code!=0){
+                            return layui.msg("上传失败！");
+                        }
+                        if(uploadStatus){
+                            productIcons.push(res.data);
+                        }
+                        myMethod.updateProductIcon(productIcons);
+                        myMethod.delteFiles(index);
+                        return;  //删除文件队列已经上传成功的文件
+                    }, error: function () {
+                        //演示失败状态，并实现重传
+                        var demoText = $('#test-upload-more-list');
+                        $('#test-upload-more-list').append('<a class="layui-btn layui-btn-mini demo-reload">重试</a>')
+                        demoText.find('.demo-reload').on('click', function () {
+                            uploadInst.upload();
+                        });
+                    }
+                });
+
+                form.render(null, 'component-form-element');
+                //自定义验证规则
+                form.verify({
+                    article_desc: function(value){
+                        layedit.sync(index);
+                    }
+                });
+                form.on('submit(component-form-element)', function(data){
+                    /*layer.msg(JSON.stringify(data.field));
+                    console.log(JSON.stringify(data.field));*/
+
+                    admin.req({
+                        url: '/productCtrl/saveProduct' //实际使用请改成服务端真实接口
+                        ,data: data.field
+                        ,dataType:'JSON'
+                        ,done: function(res) {
+                            if(res.code!=0){
+                                return  layer.alert("商品增加失败",{icon:16});
+                            }
+                            return layer.alert("商品增加成功",{icon:1},function(){
+                                window.parent.location.reload();
+                                parent.layer.close(index);
+                            });
+                        }
+                    });
+                    return false;
+                });
             },
+            delteFiles:function(index){
+                //进行删除多文件上传时重复的上传
+                delete files[index];
+                return;
+            },
+            updateProductIcon:function(productIcons){
+                for(var i=0;i<productIcons.length;i++){
+                    if(i==0){
+                        productIcon=productIcons[i];
+                    }else{
+                        productIcon+=","+productIcons[i];
+                    }
+                }
+                $("#productIcon").val(productIcon);
+            },
+            appendImage:function(obj){
+                obj.preview(function(index, file, result){
+                    $('#test-upload-more-list').append(
+                        '<div id='+file.name+' class="file-iteme">' +
+                        '<div class="handle"><i class="layui-icon layui-icon-delete"></i></div>' +
+                        '<img style="width: 100px;height: 100px;" src='+ result +' class="layui-upload-img">' +
+                        '<div class="info">' +file.name  + '</div>' +
+                        '</div>'
+                    );
+                });
+            }
+
         }
         myMethod.init();
 
-        var layedit = layui.layedit;
-        layedit.set({
-            uploadImage: {
-                url: '/imgCtrl/uploadImgBackLayVo' //接口url
-                ,type: '' //默认post
+        $(document).on("mouseenter mouseleave", ".file-iteme", function(event){
+            if(event.type === "mouseenter"){
+                //鼠标悬浮
+                $(this).children(".info").fadeIn("fast");
+                $(this).children(".handle").fadeIn("fast");
+            }else if(event.type === "mouseleave") {
+                //鼠标离开
+                $(this).children(".info").hide();
+                $(this).children(".handle").hide();
             }
         });
-       var index= layedit.build('demo'); //建立编辑器
 
-        //多图片上传
-        var uploadInst=upload.render({
-            elem: '#test-upload-more'
-            ,url: '/imgCtrl/uploadImg'
-            ,multiple: true
-            ,before: function(obj){
-                //预读本地文件示例，不支持ie8
-                var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
-                var exceedLimit = false;
-                var count=0;
-                for (var x in files) {
-                    count++;
-                    if (count > 5) {
-                        exceedLimit = true;
-                        delete files[x];
-                        count--;
-                    }
-                }
-                if (exceedLimit) {
-                    layer.msg('只能上传五个文件!<br>操作无法进行,如有需求请联系管理员', {
-                        icon: 5
-                    });
-                }
-                if($("#categoryType").val()!=null && $("#categoryType").val() !="" ){
-                    obj.preview(function(index, file, result){
-                        $('#test-upload-more-list').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
-                    });
-                }else{
-                    layer.msg("请选择商品分类");
-                }
-
-            }
-            ,done: function(res){
-                //上传完毕
-                if(res.code!=0){
-                   return layui.msg("上传失败！");
-                }
-                if(productIcon.length<=0){
-                    productIcon=res.data;
-                }else{
-                    productIcon+=","+res.data;
-                }
-                $("#productIcon").val(productIcon);
-            }, error: function () {
-                //演示失败状态，并实现重传
-                var demoText = $('#test-upload-more-list');
-                $('#test-upload-more-list').append('<a class="layui-btn layui-btn-mini demo-reload">重试</a>')
-                demoText.find('.demo-reload').on('click', function () {
-                    uploadInst.upload();
-                });
-            }
-        });
-        form.render(null, 'component-form-element');
-        //自定义验证规则
-        form.verify({
-            article_desc: function(value){
-                layedit.sync(index);
-            }
-        });
-        form.on('submit(component-form-element)', function(data){
-            layer.msg(JSON.stringify(data.field));
-            console.log(JSON.stringify(data.field));
-
-            admin.req({
-                url: '/productCtrl/saveProduct' //实际使用请改成服务端真实接口
-                ,data: data.field/*{
-                    productName:data.field.productName,
-                    productPrice:data.field.productPrice,
-                    productDescription:data.field.productDescription,
-                    productIcon:data.field.productIcon,
-                    productStatus:data.field.productStatus,
-                    categoryType:data.field.categoryType,
-                }*/
-                ,dataType:'JSON'
-                ,done: function(res) {
-                    if(res.code!=0){
-                        return  layer.alert("商品增加失败",{icon:16});
-                    }
-                    return layer.alert("商品增加成功",function(){
-                        window.parent.location.reload();
-                        parent.layer.close(index);
-                    });
-                }
-            });
-            return false;
+        // 删除图片
+        $(document).on("click", ".file-iteme .handle", function(event){
+            var subscript=$("#test-upload-more-list img").index($(this).parent());
+            //删除数组
+            productIcons.splice(subscript, 1);
+            //重新排序
+            productIcons.sort();
+            myMethod.updateProductIcon(productIcons);
+            $(this).parent().remove();
         });
     });
 </script>

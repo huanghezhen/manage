@@ -1,6 +1,7 @@
 package com.manage.service.impl.product;
 
 import com.manage.dao.product.ProductMapper;
+import com.manage.dao.productCategory.ProductCategoryMapper;
 import com.manage.entity.product.ProductModel;
 import com.manage.service.iface.product.ProductService;
 import com.manage.util.SequenceGenerator;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @ClassName: ProductServiceImpl
@@ -20,6 +22,9 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductMapper productMapper;
+
+    @Autowired
+    private ProductCategoryMapper productCategoryMapper;
 
     @Autowired
     private SequenceGenerator sequenceGenerator;
@@ -63,6 +68,9 @@ public class ProductServiceImpl implements ProductService {
 
         }
         List<ProductModel> countBySomething = productMapper.getProductBySomething(productModel,currPage,pageSize);
+        for(ProductModel productModel1:countBySomething){
+            productModel1.setCategoryName(productCategoryMapper.findOne(productModel1.getCategoryType()).getCategoryName());
+        }
         return countBySomething;
     }
 

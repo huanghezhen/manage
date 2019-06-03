@@ -14,6 +14,7 @@ import com.manage.util.SequenceGenerator;
 import com.manage.vo.LayEditVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -214,7 +215,10 @@ public class ImgServiceImpl implements ImgService
         String last = fileName.substring(fileName.lastIndexOf("."));
         fileName = sequenceGenerator.next() + last;
         // 项目在容器中实际发布运行的根路径
-        String realPath = Const.IMG_PATH;
+        //测试用
+        String realPath = ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static/img/";
+        //发布用
+        //String realPath = Const.IMG_PATH;
         // 设置存放图片文件的路径
         String path = realPath + fileName;
         // 转存文件到指定的路径

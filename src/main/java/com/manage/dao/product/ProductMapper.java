@@ -1,6 +1,7 @@
 package com.manage.dao.product;
 
 import com.manage.entity.product.ProductModel;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,5 +20,6 @@ public interface ProductMapper {
     List<ProductModel> findUpAll(Integer productStatus);
     List<ProductModel> findAll();
     int updateProduct(ProductModel product);
-
+    List<ProductModel> getProductBySomething(@Param("productModel")ProductModel productModel, @Param("currIndex") Integer currIndex,@Param("pageSize") Integer pageSize);
+    int delProduct(List<String> productIds);
 }

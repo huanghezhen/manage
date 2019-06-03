@@ -35,6 +35,9 @@ public class ProductModel {
     /**商品的分类*/
     private Integer categoryType;
 
+    /**商品的分类名字   数据库中无   视图返回使用*/
+    private String categoryName;
+
     private Date createTime;
 
     private Date updateTime;
@@ -95,6 +98,14 @@ public class ProductModel {
         this.categoryType = categoryType;
     }
 
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -109,5 +120,21 @@ public class ProductModel {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductModel{" +
+                "productId='" + productId + '\'' +
+                ", productName='" + productName + '\'' +
+                ", productPrice=" + productPrice +
+                ", productDescription='" + productDescription + '\'' +
+                ", productIcon='" + productIcon + '\'' +
+                ", productStatus=" + productStatus +
+                ", categoryType=" + categoryType +
+                ", categoryName='" + categoryName + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

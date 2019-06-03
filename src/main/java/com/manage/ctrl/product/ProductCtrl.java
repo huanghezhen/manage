@@ -88,11 +88,11 @@ public class ProductCtrl {
 
     }
     @RequestMapping("/updateProduct")
-    public Ret updateProduct(@RequestParam("product")ProductModel productModel){
+    public Ret updateProduct(ProductModel productModel){
         int resultCode = productService.updateProduct(productModel);
         if (resultCode<0)
             throw new ManageException(Const.failedEnum.UPDATE_ERROR);
-        return new Ret(Const.SESSION_CODE,Const.SUCCEED_MSG);
+        return Ret.getRet();
     }
 
 

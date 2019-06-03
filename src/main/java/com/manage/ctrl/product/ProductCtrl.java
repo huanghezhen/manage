@@ -50,13 +50,13 @@ public class ProductCtrl {
         if(productModel==null){
             throw new ManageException(Const.failedEnum.PRODUCT_NOT_EXIT);
         }
-        return new Ret(productModel, Const.SESSION_CODE,Const.SUCCEED_MSG);
+        return new Ret(productModel, Const.SUCCEED,Const.SUCCEED_MSG);
     }
 
     @RequestMapping("/findAll")
     public Ret finAll(){
         List<ProductModel> all = productService.findAll();
-        return new Ret(Const.SESSION_CODE,Const.SUCCEED_MSG);
+        return Ret.getRet();
     }
 
     @RequestMapping("/findUpAll")
@@ -84,7 +84,7 @@ public class ProductCtrl {
         }
 
         //然后返回一个data返回
-        return new Ret(productVoList,Const.SESSION_CODE,Const.SUCCEED_MSG);
+        return Ret.getRet();
 
     }
     @RequestMapping("/updateProduct")
